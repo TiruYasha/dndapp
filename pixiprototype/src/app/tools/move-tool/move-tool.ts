@@ -2,10 +2,11 @@ import { Container, Graphics, InteractionEvent } from 'pixi.js';
 import { listenToAction } from '../../pixi-event-manager/pixi-action-manager';
 import { ObjectSelected } from '../../pixi-event-manager/select-action.model';
 import { BasePixiObject } from '../../pixi-objects/base-pixi-object.model';
-import { gizmoResize } from './gizmo-action';
-import { BottomGizmo, BottomLeftGizmo, BottomRightGizmo, LeftGizmo, RightGizmo, RotateGizmo, UpperGizmo, UpperLeftGizmo, UpperRightGizmo } from './gizmo.model';
-import { GizmoType } from './gizmo.type';
-import { createContainer, createGizmo, createRectangle } from './move-tool-object-creator';
+import {
+    BottomGizmo, BottomLeftGizmo, BottomRightGizmo, Gizmo,
+    LeftGizmo, RightGizmo, RotateGizmo, UpperGizmo, UpperLeftGizmo, UpperRightGizmo
+} from './gizmo.model';
+import { createContainer, createRectangle } from './move-tool-object-creator';
 
 export class MoveTool {
     private dragging: boolean;
@@ -14,15 +15,7 @@ export class MoveTool {
     private container: Container;
     private rectangle: Graphics;
 
-    private leftGizmo: LeftGizmo;
-    private rightGizmo: RightGizmo;
-    private bottomGizmo: BottomGizmo;
-    private upperGizmo: UpperGizmo;
-    private upperLeftGizmo: UpperLeftGizmo;
-    private upperRightGizmo: UpperRightGizmo;
-    private bottomLeftGizmo: BottomLeftGizmo;
-    private bottomRightGizmo: BottomRightGizmo;
-    private rotateGizmo: RotateGizmo;
+    private gizmos: Gizmo[] = [];
 
     constructor(private stage: Container) {
         this.setupMoveTool();
@@ -66,15 +59,10 @@ export class MoveTool {
 
     private makeVisible(): void {
         this.container.visible = true;
-        this.leftGizmo.visible = true;
-        this.rightGizmo.visible = true;
-        this.upperGizmo.visible = true;
-        this.bottomGizmo.visible = true;
-        this.upperLeftGizmo.visible = true;
-        this.upperRightGizmo.visible = true;
-        this.bottomLeftGizmo.visible = true;
-        this.bottomRightGizmo.visible = true;
-        this.rotateGizmo.visible = true;
+
+        this.gizmos.forEach(g => {
+            g.visible = true;
+        });
     }
 
     private centerMoveTool(): void {
@@ -83,15 +71,9 @@ export class MoveTool {
     }
 
     private setGizmoPosition(): void {
-        this.leftGizmo.resetPosition();
-        this.rightGizmo.resetPosition();
-        this.upperGizmo.resetPosition();
-        this.bottomGizmo.resetPosition();
-        this.upperLeftGizmo.resetPosition();
-        this.upperRightGizmo.resetPosition();
-        this.bottomLeftGizmo.resetPosition();
-        this.bottomRightGizmo.resetPosition();
-        this.rotateGizmo.resetPosition();
+        this.gizmos.forEach(g => {
+            g.resetPosition();
+        });
     }
 
     private centerContainer(): void {
@@ -99,49 +81,29 @@ export class MoveTool {
         this.container.y = this.child.y;
         this.rectangle.width = this.child.width;
         this.rectangle.height = this.child.height;
-        
+
         this.container.angle = this.child.angle;
     }
 
     private setupGizmos(): void {
-        this.leftGizmo = new LeftGizmo(this, () => {
-            this.centerMoveTool();
-        });
-        this.rightGizmo = new RightGizmo(this, () => {
-            this.centerMoveTool();
-        });
-        this.upperGizmo = new UpperGizmo(this, () => {
-            this.centerMoveTool();
-        });
-        this.bottomGizmo = new BottomGizmo(this, () => {
-            this.centerMoveTool();
-        });
-        this.upperLeftGizmo = new UpperLeftGizmo(this, () => {
-            this.centerMoveTool();
-        });
-        this.upperRightGizmo = new UpperRightGizmo(this, () => {
-            this.centerMoveTool();
-        });
-        this.bottomLeftGizmo = new BottomLeftGizmo(this, () => {
-            this.centerMoveTool();
-        });
-        this.bottomRightGizmo = new BottomRightGizmo(this, () => {
-            this.centerMoveTool();
-        });
-        this.rotateGizmo = new RotateGizmo(this, () => {
-        });
-
-        this.container.addChild(this.leftGizmo.displayObject);
-        this.container.addChild(this.rightGizmo.displayObject);
-        this.container.addChild(this.upperGizmo.displayObject);
-        this.container.addChild(this.bottomGizmo.displayObject);
-        this.container.addChild(this.upperLeftGizmo.displayObject);
-        this.container.addChild(this.upperRightGizmo.displayObject);
-        this.container.addChild(this.bottomLeftGizmo.displayObject);
-        this.container.addChild(this.bottomRightGizmo.displayObject);
-        this.container.addChild(this.rotateGizmo.displayObject);
+        this.setupGizmo<LeftGizmo>(LeftGizmo);
+        this.setupGizmo<RightGizmo>(RightGizmo);
+        this.setupGizmo<UpperGizmo>(UpperGizmo);
+        this.setupGizmo<BottomGizmo>(BottomGizmo);
+        this.setupGizmo<UpperLeftGizmo>(UpperLeftGizmo);
+        this.setupGizmo<UpperRightGizmo>(UpperRightGizmo);
+        this.setupGizmo<BottomLeftGizmo>(BottomLeftGizmo);
+        this.setupGizmo<BottomRightGizmo>(BottomRightGizmo);
+        this.setupGizmo<RotateGizmo>(RotateGizmo);
         this.stage.addChild(this.container);
 
+    }
+    private setupGizmo<T extends Gizmo>(type: new (moveTool: MoveTool, moveCallback: () => void) => T): void {
+        const gizmo = new type(this, () => {
+            this.centerMoveTool();
+        });
+        this.gizmos.push(gizmo);
+        this.container.addChild(gizmo.displayObject);
     }
 
     private setupMoveTool(): void {

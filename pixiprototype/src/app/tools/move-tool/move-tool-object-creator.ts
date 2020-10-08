@@ -9,15 +9,14 @@ export function createContainer(): Container {
     container.interactive = true;
     container.buttonMode = true;
     container.zIndex = 9999999;
-   
+
     container.pivot.x = container.width / 2;
     container.pivot.y = container.height / 2;
-   
 
     return container;
 }
 
-export function createRectangle(): Graphics{
+export function createRectangle(): Graphics {
     const rectangle = new Graphics();
     rectangle.beginFill(0x1c9dff, 1);
     rectangle.drawRect(0, 0, 4, 4);
