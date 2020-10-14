@@ -1,14 +1,16 @@
 import { Container, Graphics, InteractionEvent } from 'pixi.js';
+import { Layer } from 'src/app/pixi-structure/layer.model';
 import { listenToAction } from '../../pixi-event-manager/pixi-action-manager';
 import { ObjectSelected } from '../../pixi-event-manager/select-action.model';
 import { BasePixiObject } from '../../pixi-objects/base-pixi-object.model';
+import { Tool } from '../tool.model';
 import {
     BottomGizmo, BottomLeftGizmo, BottomRightGizmo, Gizmo,
     LeftGizmo, RightGizmo, RotateGizmo, UpperGizmo, UpperLeftGizmo, UpperRightGizmo
 } from './gizmo.model';
 import { createContainer, createRectangle } from './move-tool-object-creator';
 
-export class MoveTool {
+export class MoveTool extends Tool {
     private dragging: boolean;
     private childSelectedObject: BasePixiObject;
 
@@ -17,7 +19,15 @@ export class MoveTool {
 
     private gizmos: Gizmo[] = [];
 
-    constructor(private stage: Container) {
+    private toolLayer: Container;
+
+    get mainContainer(): Container { return this.container; }
+
+    get childRectangle(): Graphics { return this.rectangle; }
+    get child(): Container { return this.childSelectedObject.displayObject; }
+
+    enable(): void {
+        this.toolLayer = this.playground.toolsLayer.layer;
         this.setupMoveTool();
 
         listenToAction<ObjectSelected>('objectSelected')
@@ -25,12 +35,28 @@ export class MoveTool {
                 this.childSelectedObject = o.object;
                 this.objectSelected();
             });
+
+        this.playground.activeLayer.clickableObjects.forEach(c => c.enableClickable());
     }
 
-    get mainContainer(): Container { return this.container; }
+    disable(): void {
+        this.container.removeAllListeners();
+        this.rectangle.removeAllListeners();
+        this.gizmos.forEach(g => g.displayObject.removeAllListeners());
 
-    get childRectangle(): Graphics { return this.rectangle; }
-    get child(): Container { return this.childSelectedObject.displayObject; }
+        this.toolLayer.removeChildren();
+        this.playground.activeLayer.clickableObjects.forEach(c => c.disableClickable());
+    }
+
+    activeLayerDisabled(): void {
+        this.playground.activeLayer.clickableObjects.forEach(c => c.disableClickable());
+        this.disable();
+    }
+
+    newActiveLayerEnabled(): void {
+        this.playground.activeLayer.clickableObjects.forEach(c => c.enableClickable());
+        this.enable();
+    }
 
     private objectSelected(): void {
         this.dragging = true;
@@ -48,7 +74,7 @@ export class MoveTool {
 
     private onDragMove(event: InteractionEvent): void {
         if (this.dragging) {
-            const newPosition = event.data.getLocalPosition(this.stage);
+            const newPosition = event.data.getLocalPosition(this.toolLayer);
             this.container.x = newPosition.x;
             this.container.y = newPosition.y;
             this.childSelectedObject.displayObject.x = newPosition.x;
@@ -95,7 +121,7 @@ export class MoveTool {
         this.setupGizmo<BottomLeftGizmo>(BottomLeftGizmo);
         this.setupGizmo<BottomRightGizmo>(BottomRightGizmo);
         this.setupGizmo<RotateGizmo>(RotateGizmo);
-        this.stage.addChild(this.container);
+        this.toolLayer.addChild(this.container);
 
     }
     private setupGizmo<T extends Gizmo>(type: new (moveTool: MoveTool, moveCallback: () => void) => T): void {

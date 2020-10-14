@@ -4,6 +4,10 @@ import { Application, Container, Graphics } from 'pixi.js';
 import { Rectangle } from '../pixi-objects/rectangle.model';
 import { Playground } from '../pixi-structure/playground.model';
 import { createGizmo } from '../tools/move-tool/move-tool-object-creator';
+import { ToolType } from '../tools/tool.type';
+import { Tool } from '../tools/tool.model';
+import { Layer } from '../pixi-structure/layer.model';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-main',
@@ -15,51 +19,20 @@ export class MainComponent implements OnInit {
   app: Application = new Application({ width: 700, height: 600 });
   playground: Playground;
 
+  toolType = ToolType;
+
+  layers$: Observable<Layer[]>;
+  activeLayer$: Observable<Layer>;
+
   constructor() { }
 
   ngOnInit(): void {
     document.body.appendChild(this.app.view);
-
+    this.app.stage.width = 700;
+    this.app.stage.height = 600;
     this.playground = new Playground(this.app);
 
-    const layer = this.playground.layers[1];
-
-    // const container = new Graphics();
-    // const rectangle = new Graphics();
-    // container.lineStyle(2, 0xff249c);
-    // container.beginFill(0xffd724);
-    // container.drawRect(0, 0, 0, 0);
-    // container.endFill();
-    //  container.x = 200;
-    //  container.y = 200;
-    // rectangle.beginFill(0xff249c);
-    // rectangle.drawRect(0, 0, 100, 100);
-    // rectangle.endFill();
-    // container.addChild(rectangle);
-    // const gizmo = createGizmo();
-    // container.addChild(gizmo);
-    // this.app.stage.addChild(container);
-
-  
-    // container.pivot.x = container.width / 2;
-    // container.pivot.y = container.height / 2;
-    // rectangle.pivot.x = rectangle.width / 2;
-    // rectangle.pivot.y = rectangle.height / 2;
-    // rectangle.x = container.width / 2;
-    // rectangle.y = container.height / 2;
-    // rectangle.interactive = true;
-    // rectangle.buttonMode = true;
-    // gizmo.x = 0;
-    // gizmo.y = 0;
-    // rectangle.on('pointerdown', (event) => {
-    //   rectangle.width += 10;
-    //   rectangle.height += 10;
-    //   gizmo.x -= 5;
-    //   gizmo.y -= 5;
-    //   container.angle += 10;
-    // });
-
-
+    const layer = this.playground.getLayer('default');
     layer.addObject(this.createRectangle());
     layer.addObject(this.createRectangle());
 
@@ -67,11 +40,19 @@ export class MainComponent implements OnInit {
 
     testLayer.addObject(this.createRectangle2());
 
-    this.app.stage.addChild(this.createRectangle().displayObject);
+    this.layers$ = this.playground.layers$;
+    this.activeLayer$ = this.playground.activeLayer$;
 
-    const rectangle = this.createRectangle();
-    //const rectangle2 = this.createRectangle();
-    this.app.stage.addChild(rectangle.displayObject);
+    this.playground.setActiveLayer(layer);
+    this.playground.setActiveTool(ToolType.Selector);
+  }
+
+  selectTool(toolType: ToolType): void {
+    this.playground.setActiveTool(toolType);
+  }
+
+  setActiveLayer(layer: Layer): void {
+    this.playground.setActiveLayer(layer);
   }
 
   private createRectangle2(): Rectangle {
@@ -90,7 +71,6 @@ export class MainComponent implements OnInit {
       }
     },
       this.app.stage);
-    rectangle.makeDraggable();
 
     return rectangle;
   }
@@ -111,7 +91,6 @@ export class MainComponent implements OnInit {
       }
     },
       this.app.stage);
-    rectangle.makeDraggable();
 
     return rectangle;
   }

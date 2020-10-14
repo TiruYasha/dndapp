@@ -1,0 +1,9 @@
+<ul>
+    <li (click)="selectTool(toolType.Selector)">Select tool</li>
+    <li (click)="selectTool(toolType.DrawRectangle)">Draw rectangle</li>
+</ul>
+<ul>
+    <li *ngFor="let layer of layers$ | async" (click)="setActiveLayer(layer)" [class.active]="layer.name === (activeLayer$ | async)?.name">
+        {{layer.name}}
+    </li>
+</ul>

@@ -81,7 +81,6 @@ export abstract class Gizmo {
         this.dragging = true;
     }
 
-
     get displayObject(): Graphics {
         return this.gizmo;
     }
@@ -240,7 +239,6 @@ export class RotateGizmo extends Gizmo {
         };
 
         const angleDeg = Math.atan2(p2.y - p1.y, p2.x - p1.x) * 180 / Math.PI;
-
         return angleDeg - (this.child.height < 0 ? -90 : 90);
     }
 }

@@ -25,7 +25,7 @@ export function createRectangle(): Graphics {
     rectangle.pivot.y = rectangle.height / 2;
     rectangle.interactive = true;
     rectangle.buttonMode = true;
-    rectangle.alpha = 0.5;
+    rectangle.alpha = 0.0;
 
     return rectangle;
 }
