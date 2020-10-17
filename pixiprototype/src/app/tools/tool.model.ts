@@ -12,4 +12,10 @@ export abstract class Tool {
 
     abstract activeLayerDisabled(): void;
     abstract newActiveLayerEnabled(): void;
+
+    abstract setOptions(options: ToolOptions): void;
+}
+
+export interface ToolOptions {
+
 }

@@ -1,9 +1,9 @@
 import { Layer } from './layer.model';
-import { Application } from 'pixi.js';
+import { Application, Graphics } from 'pixi.js';
 import { ToolType } from '../tools/tool.type';
 import { Tool } from '../tools/tool.model';
 import { createTool } from '../tools/tool-factory.model';
-import { Observable, ReplaySubject, Subject } from 'rxjs';
+import { ReplaySubject } from 'rxjs';
 
 export class Playground {
     private layersSubject = new ReplaySubject<Layer[]>(1);
@@ -20,7 +20,7 @@ export class Playground {
     activeLayer$ = this.activeLayerSubject.asObservable();
 
     constructor(private app: Application) {
-        this._backgroundLayer = this.addLayer('background', -9999999);
+        this.createBackground();
         this.addLayer('default', 0);
         this.createToolsLayer();
     }
@@ -67,11 +67,20 @@ export class Playground {
         this._activeTool?.newActiveLayerEnabled();
     }
 
+    private createBackground(): void {
+        this._backgroundLayer = this.addLayer('background', -9999999);
+        const backgroundRectangle = new Graphics();
+        backgroundRectangle.beginFill(0xffffff, 1);
+        backgroundRectangle.drawRect(0, 0, 700, 600);
+        backgroundRectangle.endFill();
+        backgroundRectangle.alpha = 0.0;
+        this.backgroundLayer.layer.addChild(backgroundRectangle);
+        this._backgroundLayer.makeInteractable();
+    }
+
     private createToolsLayer(): void {
         this._toolsLayer = this.addLayer('tools', 9999999);
         this._toolsLayer.layer.width = this.app.view.width;
         this._toolsLayer.layer.height = this.app.view.height;
-        // const multiSelectTool = new MultiSelectorTool(this.backgroundLayer.layer, layer.layer);
-        // const moveTool = new MoveTool(layer.layer);
     }
 }

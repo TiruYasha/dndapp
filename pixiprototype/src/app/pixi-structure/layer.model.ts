@@ -4,6 +4,7 @@ import { ClickableObject } from '../pixi-objects/clickable-pixi-object.model';
 import { PixiObjectType } from '../pixi-objects/pixi-object.type';
 
 export class Layer {
+
     private container: Container;
     private _pixiObjects: BasePixiObject[] = [];
 
@@ -15,6 +16,10 @@ export class Layer {
     addObject(pixiObject: BasePixiObject): void {
         this._pixiObjects.push(pixiObject);
         this.container.addChild(pixiObject.displayObject);
+    }
+
+    makeInteractable(): void {
+        this.container.interactive = true;
     }
 
     get pixiObjects(): BasePixiObject[] { return this._pixiObjects; }

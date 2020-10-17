@@ -8,6 +8,7 @@ import { ToolType } from '../tools/tool.type';
 import { Tool } from '../tools/tool.model';
 import { Layer } from '../pixi-structure/layer.model';
 import { Observable } from 'rxjs';
+import { DrawShapeTool } from '../tools/draw-shape-tool/draw-shape-tool.model';
 
 @Component({
   selector: 'app-main',
@@ -44,7 +45,7 @@ export class MainComponent implements OnInit {
     this.activeLayer$ = this.playground.activeLayer$;
 
     this.playground.setActiveLayer(layer);
-    this.playground.setActiveTool(ToolType.Selector);
+    this.playground.setActiveTool(ToolType.DrawShape);
   }
 
   selectTool(toolType: ToolType): void {

@@ -1,16 +1,17 @@
 import { Container, Graphics, InteractionEvent } from 'pixi.js';
-import { Layer } from 'src/app/pixi-structure/layer.model';
 import { listenToAction } from '../../pixi-event-manager/pixi-action-manager';
 import { ObjectSelected } from '../../pixi-event-manager/select-action.model';
 import { BasePixiObject } from '../../pixi-objects/base-pixi-object.model';
-import { Tool } from '../tool.model';
+import { Tool, ToolOptions } from '../tool.model';
 import {
     BottomGizmo, BottomLeftGizmo, BottomRightGizmo, Gizmo,
     LeftGizmo, RightGizmo, RotateGizmo, UpperGizmo, UpperLeftGizmo, UpperRightGizmo
 } from './gizmo.model';
 import { createContainer, createRectangle } from './move-tool-object-creator';
+import { MultiSelectorTool } from './multi-selector-tool';
 
 export class MoveTool extends Tool {
+
     private dragging: boolean;
     private childSelectedObject: BasePixiObject;
 
@@ -19,7 +20,7 @@ export class MoveTool extends Tool {
 
     private gizmos: Gizmo[] = [];
 
-    private toolLayer: Container;
+    private multiSelectTool: MultiSelectorTool;
 
     get mainContainer(): Container { return this.container; }
 
@@ -27,7 +28,6 @@ export class MoveTool extends Tool {
     get child(): Container { return this.childSelectedObject.displayObject; }
 
     enable(): void {
-        this.toolLayer = this.playground.toolsLayer.layer;
         this.setupMoveTool();
 
         listenToAction<ObjectSelected>('objectSelected')
@@ -37,6 +37,10 @@ export class MoveTool extends Tool {
             });
 
         this.playground.activeLayer.clickableObjects.forEach(c => c.enableClickable());
+        this.playground.backgroundLayer.layer.on('pointerdown', this.backgroundClicked);
+
+        this.multiSelectTool = new MultiSelectorTool(this.playground);
+        this.multiSelectTool.enable();
     }
 
     disable(): void {
@@ -44,18 +48,25 @@ export class MoveTool extends Tool {
         this.rectangle.removeAllListeners();
         this.gizmos.forEach(g => g.displayObject.removeAllListeners());
 
-        this.toolLayer.removeChildren();
+        this.playground.toolsLayer.layer.removeChildren();
         this.playground.activeLayer.clickableObjects.forEach(c => c.disableClickable());
+        this.multiSelectTool.disable();
     }
 
     activeLayerDisabled(): void {
-        this.playground.activeLayer.clickableObjects.forEach(c => c.disableClickable());
         this.disable();
     }
 
     newActiveLayerEnabled(): void {
-        this.playground.activeLayer.clickableObjects.forEach(c => c.enableClickable());
         this.enable();
+    }
+
+    setOptions(options: ToolOptions): void {
+        throw new Error('Method not implemented.');
+    }
+
+    private backgroundClicked = () => {
+        this.makeInvisible();
     }
 
     private objectSelected(): void {
@@ -74,13 +85,21 @@ export class MoveTool extends Tool {
 
     private onDragMove(event: InteractionEvent): void {
         if (this.dragging) {
-            const newPosition = event.data.getLocalPosition(this.toolLayer);
+            const newPosition = event.data.getLocalPosition(this.playground.toolsLayer.layer);
             this.container.x = newPosition.x;
             this.container.y = newPosition.y;
             this.childSelectedObject.displayObject.x = newPosition.x;
             this.childSelectedObject.displayObject.y = newPosition.y;
             this.setGizmoPosition();
         }
+    }
+
+    private makeInvisible(): void {
+        this.container.visible = false;
+
+        this.gizmos.forEach(g => {
+            g.visible = false;
+        });
     }
 
     private makeVisible(): void {
@@ -121,7 +140,7 @@ export class MoveTool extends Tool {
         this.setupGizmo<BottomLeftGizmo>(BottomLeftGizmo);
         this.setupGizmo<BottomRightGizmo>(BottomRightGizmo);
         this.setupGizmo<RotateGizmo>(RotateGizmo);
-        this.toolLayer.addChild(this.container);
+        this.playground.toolsLayer.layer.addChild(this.container);
 
     }
     private setupGizmo<T extends Gizmo>(type: new (moveTool: MoveTool, moveCallback: () => void) => T): void {

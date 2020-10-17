@@ -1,13 +1,13 @@
-import { Container, DisplayObject, Graphics } from 'pixi.js';
-import { BaseOptions as BasePixiObjectOptions, BasePixiObject } from './base-pixi-object.model';
-import { ClickableObject } from './clickable-pixi-object.model';
+import { Container, Graphics } from 'pixi.js';
+import { BaseOptions as BasePixiObjectOptions } from './base-pixi-object.model';
+import { ShapePixiObject } from './shape.model';
 
-export class Rectangle extends ClickableObject {
+export class Rectangle extends ShapePixiObject {
     rectangle: Graphics;
 
     constructor(options: RectangleOptions, parent: Container) {
         const rectangle = new Graphics();
-        rectangle.lineStyle(options.lineStyle.width, options.lineStyle.color, options.lineStyle.alpha);
+        //rectangle.lineStyle(options.lineStyle.width, options.lineStyle.color, options.lineStyle.alpha);
 
         if (options.fillColor) {
             rectangle.beginFill(options.fillColor.colorInHex);
