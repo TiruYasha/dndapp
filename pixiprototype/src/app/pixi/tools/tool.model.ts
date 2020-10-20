@@ -1,8 +1,8 @@
-import { Layer } from '../pixi-structure/layer.model';
 import { Playground } from '../pixi-structure/playground.model';
+import { ToolType } from './tool.type';
 
 export abstract class Tool {
-    constructor(protected playground: Playground) {
+    constructor(protected playground: Playground, public type: ToolType) {
 
     }
 
@@ -12,10 +12,4 @@ export abstract class Tool {
 
     abstract activeLayerDisabled(): void;
     abstract newActiveLayerEnabled(): void;
-
-    abstract setOptions(options: ToolOptions): void;
-}
-
-export interface ToolOptions {
-
 }

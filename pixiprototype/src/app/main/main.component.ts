@@ -1,29 +1,27 @@
-import { stagger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
-import { Application, Container, Graphics } from 'pixi.js';
-import { Rectangle } from '../pixi-objects/rectangle.model';
-import { Playground } from '../pixi-structure/playground.model';
-import { createGizmo } from '../tools/move-tool/move-tool-object-creator';
-import { ToolType } from '../tools/tool.type';
-import { Tool } from '../tools/tool.model';
-import { Layer } from '../pixi-structure/layer.model';
+import { Application } from 'pixi.js';
 import { Observable } from 'rxjs';
-import { DrawShapeTool } from '../tools/draw-shape-tool/draw-shape-tool.model';
+import { Rectangle } from '../pixi/pixi-objects/rectangle.model';
+import { Layer } from '../pixi/pixi-structure/layer.model';
+import { Playground } from '../pixi/pixi-structure/playground.model';
+import { Tool } from '../pixi/tools/tool.model';
+import { ToolType } from '../pixi/tools/tool.type';
 
 @Component({
-  selector: 'app-main',
+  selector: 'trpg-main',
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.scss']
 })
 export class MainComponent implements OnInit {
 
-  app: Application = new Application({ width: 700, height: 600 });
+  app: Application = new Application({ width: 700, height: 600, backgroundColor: 0xffffff });
   playground: Playground;
 
   toolType = ToolType;
 
   layers$: Observable<Layer[]>;
   activeLayer$: Observable<Layer>;
+  activeTool$: Observable<Tool>;
 
   constructor() { }
 
@@ -43,6 +41,7 @@ export class MainComponent implements OnInit {
 
     this.layers$ = this.playground.layers$;
     this.activeLayer$ = this.playground.activeLayer$;
+    this.activeTool$ = this.playground.activeTool$;
 
     this.playground.setActiveLayer(layer);
     this.playground.setActiveTool(ToolType.DrawShape);
@@ -56,6 +55,10 @@ export class MainComponent implements OnInit {
     this.playground.setActiveLayer(layer);
   }
 
+  changeOptions(event): void {
+    console.log(event);
+  }
+
   private createRectangle2(): Rectangle {
     const rectangle = new Rectangle({
       width: 150,
@@ -64,11 +67,11 @@ export class MainComponent implements OnInit {
       y: 300,
       lineStyle: {
         width: 0,
-        color: 0xffffff,
+        color: 0x000000,
         alpha: 1
       },
       fillColor: {
-        colorInHex: 0xffffff
+        colorInHex: 0x000000
       }
     },
       this.app.stage);

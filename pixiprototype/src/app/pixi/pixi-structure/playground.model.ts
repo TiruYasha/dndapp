@@ -8,6 +8,7 @@ import { ReplaySubject } from 'rxjs';
 export class Playground {
     private layersSubject = new ReplaySubject<Layer[]>(1);
     private activeLayerSubject = new ReplaySubject<Layer>(1);
+    private activeToolSubject = new ReplaySubject<Tool>(1);
 
     private _layers: Layer[] = [];
     private _backgroundLayer: Layer;
@@ -18,6 +19,7 @@ export class Playground {
 
     layers$ = this.layersSubject.asObservable();
     activeLayer$ = this.activeLayerSubject.asObservable();
+    activeTool$ = this.activeToolSubject.asObservable();
 
     constructor(private app: Application) {
         this.createBackground();
@@ -58,6 +60,7 @@ export class Playground {
 
         this._activeTool = createTool(toolType, this);
         this._activeTool.enable();
+        this.activeToolSubject.next(this._activeTool);
     }
 
     setActiveLayer(layer: Layer): void {

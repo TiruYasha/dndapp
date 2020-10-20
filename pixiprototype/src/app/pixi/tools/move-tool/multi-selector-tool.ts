@@ -1,6 +1,7 @@
 import { Container, Graphics, InteractionEvent } from 'pixi.js';
-import { Playground } from 'src/app/pixi-structure/playground.model';
-import { Tool, ToolOptions } from '../tool.model';
+import { Playground } from '../../pixi-structure/playground.model';
+import { Tool } from '../tool.model';
+import { ToolType } from '../tool.type';
 
 export class MultiSelectorTool extends Tool {
 
@@ -9,6 +10,10 @@ export class MultiSelectorTool extends Tool {
     private initialY = 0;
 
     private selection: Graphics;
+
+    constructor(playground: Playground) {
+        super(playground, ToolType.Selector);
+    }
 
     pointerDown = (event: InteractionEvent) => {
         this.initialX = event.data.global.x;
@@ -61,8 +66,5 @@ export class MultiSelectorTool extends Tool {
     activeLayerDisabled(): void {
     }
     newActiveLayerEnabled(): void {
-    }
-
-    setOptions(options: ToolOptions): void {
     }
 }

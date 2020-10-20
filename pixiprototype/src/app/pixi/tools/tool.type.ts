@@ -1,4 +1,5 @@
 export enum ToolType {
     Selector,
-    DrawShape
+    DrawShape,
+    FogOfWar
 }

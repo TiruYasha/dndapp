@@ -1,8 +1,9 @@
 import { Container, Graphics, InteractionEvent } from 'pixi.js';
-import { Rectangle } from 'src/app/pixi-objects/rectangle.model';
-import { ShapePixiObject } from 'src/app/pixi-objects/shape.model';
-import { Playground } from 'src/app/pixi-structure/playground.model';
-import { Tool, ToolOptions } from '../tool.model';
+import { ShapePixiObject } from 'src/app/pixi/pixi-objects/shape.model';
+import { Playground } from 'src/app/pixi/pixi-structure/playground.model';
+import { Rectangle } from '../../pixi-objects/rectangle.model';
+import { Tool } from '../tool.model';
+import { ToolType } from '../tool.type';
 import { DrawShapeToolOptions, DrawShapeType } from './draw-shape-options.model';
 
 export class DrawShapeTool extends Tool {
@@ -14,10 +15,10 @@ export class DrawShapeTool extends Tool {
     private initialY = 0;
 
     constructor(playground: Playground) {
-        super(playground);
+        super(playground, ToolType.DrawShape);
 
         this.options = {
-            color: 0xffffff,
+            color: 0x000000,
             fill: true,
             shape: DrawShapeType.Rectangle
         };
@@ -64,13 +65,12 @@ export class DrawShapeTool extends Tool {
             .off('pointermove', this.pointerMove);
     }
     activeLayerDisabled(): void {
-        // throw new Error('Method not implemented.');
     }
     newActiveLayerEnabled(): void {
-        //throw new Error('Method not implemented.');
     }
 
-    setOptions(options: ToolOptions): void {
+    setColor(hex: number): void {
+        this.options.color = hex;
     }
 
     private setupShape(): void {
