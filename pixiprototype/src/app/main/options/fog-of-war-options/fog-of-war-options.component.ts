@@ -23,4 +23,8 @@ export class FogOfWarOptionsComponent implements OnInit {
   clearFog(): void {
     this.fogOfWar.clearFog();
   }
+
+  enableRectangleReveal(): void {
+    this.fogOfWar.enableRectangleReveal();
+  }
 }

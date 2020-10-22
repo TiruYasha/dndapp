@@ -48,17 +48,17 @@ export class MultiSelectorTool extends Tool {
         this.selection.beginFill(0x1c9dff, 0.5);
         this.selection.drawRect(0, 0, 10, 10);
         this.selection.endFill();
-        this.playground.toolsLayer.layer.addChild(this.selection);
+        this.playground.toolsLayer.container.addChild(this.selection);
 
-        this.playground.backgroundLayer.layer.on('pointerdown', this.pointerDown)
+        this.playground.backgroundLayer.container.on('pointerdown', this.pointerDown)
             .on('pointerup', this.dragEnd)
             .on('pointerupoutside', this.dragEnd)
             .on('pointermove', this.pointerMove);
     }
 
     disable(): void {
-        this.playground.toolsLayer.layer.removeChild(this.selection);
-        this.playground.backgroundLayer.layer.off('pointerdown', this.pointerDown)
+        this.playground.toolsLayer.container.removeChild(this.selection);
+        this.playground.backgroundLayer.container.off('pointerdown', this.pointerDown)
             .off('pointerup', () => this.dragEnd)
             .off('pointerupoutside', () => this.dragEnd)
             .off('pointermove', this.pointerMove);

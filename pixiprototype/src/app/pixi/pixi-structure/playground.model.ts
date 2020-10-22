@@ -50,12 +50,17 @@ export class Playground {
     addLayer(layer: Layer): Layer {
         this._layers.push(layer);
 
-        this.app.stage.addChild(layer.layer);
-        this.app.stage.children.sort((itemA, itemB) => itemA.zIndex - itemB.zIndex);
-        this.layers.sort((itemA, itemB) => itemA.layer.zIndex - itemB.layer.zIndex);
-        this.layersSubject.next(this._layers);
+        this.app.stage.addChild(layer.container);
+        this.layersChanged();
 
         return layer;
+    }
+
+
+    deleteLayer(layer: Layer): void {
+        this._layers = this.layers.filter(l => l !== layer);
+        this.app.stage.removeChild(layer.container);
+        this.layersChanged();
     }
 
     getLayer(name: string): Layer {
@@ -79,6 +84,12 @@ export class Playground {
         this._activeTool?.newActiveLayerEnabled();
     }
 
+    private layersChanged(): void {
+        this.app.stage.children.sort((itemA, itemB) => itemA.zIndex - itemB.zIndex);
+        this.layers.sort((itemA, itemB) => itemA.order - itemB.order);
+        this.layersSubject.next(this._layers);
+    }
+
     private createBackground(): void {
         this._backgroundLayer = this.addLayerQuick('background', -9999999);
         const backgroundRectangle = new Graphics();
@@ -86,13 +97,13 @@ export class Playground {
         backgroundRectangle.drawRect(0, 0, 700, 600);
         backgroundRectangle.endFill();
         backgroundRectangle.alpha = 0.0;
-        this.backgroundLayer.layer.addChild(backgroundRectangle);
+        this.backgroundLayer.container.addChild(backgroundRectangle);
         this._backgroundLayer.makeInteractable();
     }
 
     private createToolsLayer(): void {
         this._toolsLayer = this.addLayerQuick('tools', 9999999);
-        this._toolsLayer.layer.width = this.app.view.width;
-        this._toolsLayer.layer.height = this.app.view.height;
+        this._toolsLayer.container.width = this.app.view.width;
+        this._toolsLayer.container.height = this.app.view.height;
     }
 }

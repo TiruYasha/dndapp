@@ -52,14 +52,14 @@ export class DrawShapeTool extends Tool {
     }
 
     enable(): void {
-        this.playground.backgroundLayer.layer.on('pointerdown', this.pointerDown)
+        this.playground.backgroundLayer.container.on('pointerdown', this.pointerDown)
             .on('pointerup', this.dragEnd)
             .on('pointerupoutside', this.dragEnd)
             .on('pointermove', this.pointerMove);
     }
 
     disable(): void {
-        this.playground.backgroundLayer.layer.off('pointerdown', this.pointerDown)
+        this.playground.backgroundLayer.container.off('pointerdown', this.pointerDown)
             .off('pointerup', () => this.dragEnd)
             .off('pointerupoutside', () => this.dragEnd)
             .off('pointermove', this.pointerMove);
@@ -89,7 +89,7 @@ export class DrawShapeTool extends Tool {
                     colorInHex: this.options.color
                 } : undefined
             },
-                this.playground.activeLayer.layer);
+                this.playground.activeLayer.container);
             this.shape = rectangle;
         }
     }

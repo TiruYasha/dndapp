@@ -44,7 +44,7 @@ export class MoveTool extends Tool {
             });
 
         this.playground.activeLayer.clickableObjects.forEach(c => c.enableClickable());
-        this.playground.backgroundLayer.layer.on('pointerdown', this.backgroundClicked);
+        this.playground.backgroundLayer.container.on('pointerdown', this.backgroundClicked);
 
         this.multiSelectTool = new MultiSelectorTool(this.playground);
         this.multiSelectTool.enable();
@@ -55,7 +55,7 @@ export class MoveTool extends Tool {
         this.rectangle.removeAllListeners();
         this.gizmos.forEach(g => g.displayObject.removeAllListeners());
 
-        this.playground.toolsLayer.layer.removeChildren();
+        this.playground.toolsLayer.container.removeChildren();
         this.playground.activeLayer.clickableObjects.forEach(c => c.disableClickable());
         this.multiSelectTool.disable();
     }
@@ -88,7 +88,7 @@ export class MoveTool extends Tool {
 
     private onDragMove(event: InteractionEvent): void {
         if (this.dragging) {
-            const newPosition = event.data.getLocalPosition(this.playground.toolsLayer.layer);
+            const newPosition = event.data.getLocalPosition(this.playground.toolsLayer.container);
             this.container.x = newPosition.x;
             this.container.y = newPosition.y;
             this.childSelectedObject.displayObject.x = newPosition.x;
@@ -143,7 +143,7 @@ export class MoveTool extends Tool {
         this.setupGizmo<BottomLeftGizmo>(BottomLeftGizmo);
         this.setupGizmo<BottomRightGizmo>(BottomRightGizmo);
         this.setupGizmo<RotateGizmo>(RotateGizmo);
-        this.playground.toolsLayer.layer.addChild(this.container);
+        this.playground.toolsLayer.container.addChild(this.container);
 
     }
     private setupGizmo<T extends Gizmo>(type: new (moveTool: MoveTool, moveCallback: () => void) => T): void {

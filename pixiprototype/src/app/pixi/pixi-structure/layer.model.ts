@@ -5,21 +5,22 @@ import { PixiObjectType } from '../pixi-objects/pixi-object.type';
 
 export class Layer {
 
-    private container: Container;
+    private _container: Container;
     private _pixiObjects: BasePixiObject[] = [];
 
-    constructor(public name: string, private order: number) {
-        this.container = new Container();
-        this.container.zIndex = order;
+    constructor(public name: string, public order: number) {
+        this._container = new Container();
+        this._container.name = name;
+        this._container.zIndex = order;
     }
 
     addObject(pixiObject: BasePixiObject): void {
         this._pixiObjects.push(pixiObject);
-        this.container.addChild(pixiObject.displayObject);
+        this._container.addChild(pixiObject.displayObject);
     }
 
     makeInteractable(): void {
-        this.container.interactive = true;
+        this._container.interactive = true;
     }
 
     get pixiObjects(): BasePixiObject[] { return this._pixiObjects; }
@@ -29,7 +30,7 @@ export class Layer {
             .filter<ClickableObject>((p): p is ClickableObject => p.type.some(s => s === PixiObjectType.Clickable));
     }
 
-    get layer(): Container {
-        return this.container;
+    get container(): Container {
+        return this._container;
     }
 }
