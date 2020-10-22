@@ -56,7 +56,6 @@ export class Playground {
         return layer;
     }
 
-
     deleteLayer(layer: Layer): void {
         this._layers = this.layers.filter(l => l !== layer);
         this.app.stage.removeChild(layer.container);
@@ -78,10 +77,8 @@ export class Playground {
     }
 
     setActiveLayer(layer: Layer): void {
-        this._activeTool?.activeLayerDisabled();
         this._activeLayer = layer;
         this.activeLayerSubject.next(this._activeLayer);
-        this._activeTool?.newActiveLayerEnabled();
     }
 
     private layersChanged(): void {

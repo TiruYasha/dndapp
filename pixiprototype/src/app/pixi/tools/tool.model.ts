@@ -9,7 +9,4 @@ export abstract class Tool {
     abstract enable(): void;
 
     abstract disable(): void;
-
-    abstract activeLayerDisabled(): void;
-    abstract newActiveLayerEnabled(): void;
 }

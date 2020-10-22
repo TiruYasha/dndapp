@@ -63,8 +63,4 @@ export class MultiSelectorTool extends Tool {
             .off('pointerupoutside', () => this.dragEnd)
             .off('pointermove', this.pointerMove);
     }
-    activeLayerDisabled(): void {
-    }
-    newActiveLayerEnabled(): void {
-    }
 }

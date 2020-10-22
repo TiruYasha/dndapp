@@ -1,3 +1,4 @@
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { autoDetectRenderer, BLEND_MODES, Container, filters, Graphics, InteractionEvent, RenderTexture, SCALE_MODES, Sprite } from 'pixi.js';
 import { Layer } from '../../pixi-structure/layer.model';
 import { Playground } from '../../pixi-structure/playground.model';
@@ -6,7 +7,7 @@ import { ToolType } from '../tool.type';
 
 export class FogOfWarTool extends Tool {
     private layer: Layer;
-    private layerName = 'FogOfWarLower';
+    private layerName = 'FogOfWar';
     private fog: Graphics;
     private maskTexture: RenderTexture;
 
@@ -16,6 +17,8 @@ export class FogOfWarTool extends Tool {
     private selection: Graphics;
     private rectangleReveal = new Graphics();
 
+    private rectangleRevealEnabled = false;
+
     constructor(playground: Playground) {
         super(playground, ToolType.FogOfWar);
     }
@@ -24,17 +27,11 @@ export class FogOfWarTool extends Tool {
         this.layer = this.playground.getLayer(this.layerName);
     }
     disable(): void {
-    }
-    activeLayerDisabled(): void {
-    }
-    newActiveLayerEnabled(): void {
+        this.disableRectangleReveal();
     }
 
     fillMap(): void {
-        // const brush = new Graphics();
-        // brush.beginFill(0xffffff);
-        // brush.drawCircle(0, 0, 100);
-        // brush.endFill();
+        this.disableRectangleReveal();
         this.layer = new Layer(this.layerName, 99999);
         this.layer.container.filters = [new filters.AlphaFilter()];
         this.playground.addLayer(this.layer);
@@ -59,16 +56,16 @@ export class FogOfWarTool extends Tool {
         const maskSprite = new Sprite(this.maskTexture);
         this.layer.container.addChild(maskSprite);
         maskSprite.blendMode = BLEND_MODES.DST_OUT;
-
-        // brush.position.copyFrom(event.data.global);
-        // app.renderer.render(brush, maskTexture, false, null, false);
     }
 
     clearFog(): void {
+        this.disableRectangleReveal();
         this.playground.deleteLayer(this.layer);
     }
 
     enableRectangleReveal(): void {
+        if (this.rectangleRevealEnabled) { return; }
+
         this.rectangleReveal = new Graphics();
         this.rectangleReveal.beginFill(0xffffff);
         this.rectangleReveal.drawRect(0, 0, 20, 20);
@@ -85,6 +82,22 @@ export class FogOfWarTool extends Tool {
             .on('pointerup', this.dragEnd)
             .on('pointerupoutside', this.dragEnd)
             .on('pointermove', this.pointerMove);
+
+        this.rectangleRevealEnabled = true;
+    }
+
+    disableRectangleReveal(): void {
+        if (!this.rectangleRevealEnabled) { return; }
+
+        this.rectangleReveal = null;
+        this.playground.toolsLayer.container.removeChild(this.selection);
+        this.selection = null;
+        this.playground.backgroundLayer.container.off('pointerdown', this.pointerDown)
+            .off('pointerup', () => this.dragEnd)
+            .off('pointerupoutside', () => this.dragEnd)
+            .off('pointermove', this.pointerMove);
+
+        this.rectangleRevealEnabled = false;
     }
 
     pointerDown = (event: InteractionEvent) => {

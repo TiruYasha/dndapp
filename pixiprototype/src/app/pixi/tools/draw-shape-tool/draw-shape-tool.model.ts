@@ -64,10 +64,6 @@ export class DrawShapeTool extends Tool {
             .off('pointerupoutside', () => this.dragEnd)
             .off('pointermove', this.pointerMove);
     }
-    activeLayerDisabled(): void {
-    }
-    newActiveLayerEnabled(): void {
-    }
 
     setColor(hex: number): void {
         this.options.color = hex;
