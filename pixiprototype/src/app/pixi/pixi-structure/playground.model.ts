@@ -21,9 +21,9 @@ export class Playground {
     activeLayer$ = this.activeLayerSubject.asObservable();
     activeTool$ = this.activeToolSubject.asObservable();
 
-    constructor(private app: Application) {
+    constructor(public app: Application) {
         this.createBackground();
-        this.addLayer('default', 0);
+        this.addLayerQuick('default', 0);
         this.createToolsLayer();
     }
 
@@ -37,8 +37,17 @@ export class Playground {
 
     get activeLayer(): Layer { return this._activeLayer; }
 
-    addLayer(name: string, order: number): Layer {
-        const layer = new Layer(name, order, this.app.stage.width, this.app.stage.height);
+    get width(): number { return this.app.view.width; }
+    get height(): number { return this.app.view.height; }
+
+    addLayerQuick(name: string, order: number): Layer {
+        const layer = new Layer(name, order);
+        this.addLayer(layer);
+
+        return layer;
+    }
+
+    addLayer(layer: Layer): Layer {
         this._layers.push(layer);
 
         this.app.stage.addChild(layer.layer);
@@ -71,7 +80,7 @@ export class Playground {
     }
 
     private createBackground(): void {
-        this._backgroundLayer = this.addLayer('background', -9999999);
+        this._backgroundLayer = this.addLayerQuick('background', -9999999);
         const backgroundRectangle = new Graphics();
         backgroundRectangle.beginFill(0xffffff, 1);
         backgroundRectangle.drawRect(0, 0, 700, 600);
@@ -82,7 +91,7 @@ export class Playground {
     }
 
     private createToolsLayer(): void {
-        this._toolsLayer = this.addLayer('tools', 9999999);
+        this._toolsLayer = this.addLayerQuick('tools', 9999999);
         this._toolsLayer.layer.width = this.app.view.width;
         this._toolsLayer.layer.height = this.app.view.height;
     }

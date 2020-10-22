@@ -16,4 +16,11 @@ export class FogOfWarOptionsComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  fillMap(): void {
+    this.fogOfWar.fillMap();
+  }
+
+  clearFog(): void {
+    this.fogOfWar.clearFog();
+  }
 }

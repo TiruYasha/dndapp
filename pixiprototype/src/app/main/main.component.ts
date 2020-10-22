@@ -35,7 +35,7 @@ export class MainComponent implements OnInit {
     layer.addObject(this.createRectangle());
     layer.addObject(this.createRectangle());
 
-    const testLayer = this.playground.addLayer('test 2', -10);
+    const testLayer = this.playground.addLayerQuick('test 2', -10);
 
     testLayer.addObject(this.createRectangle2());
 
@@ -44,7 +44,7 @@ export class MainComponent implements OnInit {
     this.activeTool$ = this.playground.activeTool$;
 
     this.playground.setActiveLayer(layer);
-    this.playground.setActiveTool(ToolType.DrawShape);
+    this.playground.setActiveTool(ToolType.FogOfWar);
   }
 
   selectTool(toolType: ToolType): void {
