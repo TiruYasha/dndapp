@@ -111,7 +111,6 @@ export class FogOfWarTool extends Tool {
         this.rectangleReveal.position.set(this.selection.x, this.selection.y);
         this.rectangleReveal.width = this.selection.width;
         this.rectangleReveal.height = this.selection.height;
-
         this.playground.app.renderer.render(this.rectangleReveal, this.maskTexture, false, null, false);
 
         this.selection.visible = false;

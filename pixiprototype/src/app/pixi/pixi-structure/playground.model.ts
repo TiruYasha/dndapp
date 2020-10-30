@@ -4,6 +4,8 @@ import { ToolType } from '../tools/tool.type';
 import { Tool } from '../tools/tool.model';
 import { createTool } from '../tools/tool-factory.model';
 import { ReplaySubject } from 'rxjs';
+import { triggerAction } from '../pixi-event-manager/pixi-action-manager';
+import { PlaygroundEvents } from '../pixi-event-manager/pixi-events.model';
 
 export class Playground {
     private layersSubject = new ReplaySubject<Layer[]>(1);
@@ -79,6 +81,7 @@ export class Playground {
     setActiveLayer(layer: Layer): void {
         this._activeLayer = layer;
         this.activeLayerSubject.next(this._activeLayer);
+        triggerAction(PlaygroundEvents.layerSwitched, this._activeLayer, true);
     }
 
     private layersChanged(): void {

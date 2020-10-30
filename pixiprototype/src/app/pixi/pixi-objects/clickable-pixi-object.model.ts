@@ -1,6 +1,7 @@
 import { Container } from 'pixi.js';
 import { Subject } from 'rxjs';
 import { triggerAction } from '../pixi-event-manager/pixi-action-manager';
+import { PlaygroundEvents } from '../pixi-event-manager/pixi-events.model';
 import { ObjectSelected } from '../pixi-event-manager/select-action.model';
 import { BaseOptions, BasePixiObject } from './base-pixi-object.model';
 import { PixiObjectType } from './pixi-object.type';
@@ -27,7 +28,7 @@ export abstract class ClickableObject extends BasePixiObject {
     }
 
     private onDragStart(): void {
-        triggerAction<ObjectSelected>('objectSelected', {
+        triggerAction<ObjectSelected>(PlaygroundEvents.objectSelected, {
             object: this
         });
     }

@@ -1,15 +1,15 @@
 <ul>
     <li (click)="selectTool(toolType.Selector)">Select tool</li>
-    <li (click)="selectTool(toolType.DrawShape)">Draw shape</li>
-    <li (click)="selectTool(toolType.FogOfWar)">Fog of war</li>
+    <!-- <li (click)="selectTool(toolType.DrawShape)">Draw shape</li>
+    <li (click)="selectTool(toolType.FogOfWar)">Fog of war</li> -->
 </ul>
-<div>
+<!-- <div>
     <h4>Options</h4>
     <ng-container *ngIf="activeTool$ | async as activeTool">
         <trpg-draw-shape-options [drawShapeTool]="activeTool" *ngIf="activeTool.type === toolType.DrawShape"></trpg-draw-shape-options>
         <trpg-fog-of-war-options [fogOfWar]="activeTool" *ngIf="activeTool.type === toolType.FogOfWar"></trpg-fog-of-war-options>
     </ng-container>
-</div>
+</div> -->
 <ul>
     <li *ngFor="let layer of layers$ | async" (click)="setActiveLayer(layer)"
         [class.active]="layer.name === (activeLayer$ | async)?.name">

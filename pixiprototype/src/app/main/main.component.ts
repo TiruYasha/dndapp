@@ -44,7 +44,7 @@ export class MainComponent implements OnInit {
     this.activeTool$ = this.playground.activeTool$;
 
     this.playground.setActiveLayer(layer);
-    this.playground.setActiveTool(ToolType.FogOfWar);
+    this.playground.setActiveTool(ToolType.Selector);
   }
 
   selectTool(toolType: ToolType): void {
