@@ -5,7 +5,7 @@ import { ShapePixiObject } from './shape.model';
 export class Rectangle extends ShapePixiObject {
     rectangle: Graphics;
 
-    constructor(options: RectangleOptions, parent: Container) {
+    constructor(options: RectangleOptions) {
         const rectangle = new Graphics();
         //rectangle.lineStyle(options.lineStyle.width, options.lineStyle.color, options.lineStyle.alpha);
 
@@ -22,7 +22,7 @@ export class Rectangle extends ShapePixiObject {
         rectangle.pivot.x = options.width / 2;
         rectangle.pivot.y = options.height / 2;
 
-        super(rectangle, options, parent);
+        super(rectangle, options);
 
         this.rectangle = rectangle;
     }

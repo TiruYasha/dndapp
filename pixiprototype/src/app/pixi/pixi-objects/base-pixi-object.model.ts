@@ -4,7 +4,7 @@ import { PixiObjectType } from './pixi-object.type';
 export abstract class BasePixiObject {
     type: PixiObjectType[] = [];
 
-    protected constructor(public displayObject: Container, options: BaseOptions, protected parent: Container) {
+    protected constructor(public displayObject: Container, options: BaseOptions) {
         this.displayObject.x = options.x;
         this.displayObject.y = options.y;
     }

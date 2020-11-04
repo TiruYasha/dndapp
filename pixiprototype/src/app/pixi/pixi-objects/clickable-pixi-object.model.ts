@@ -9,8 +9,8 @@ import { PixiObjectType } from './pixi-object.type';
 export abstract class ClickableObject extends BasePixiObject {
     destroyObjectSelected$ = new Subject();
 
-    constructor(object: Container, options: BaseOptions, parent: Container) {
-        super(object, options, parent);
+    constructor(object: Container, options: BaseOptions) {
+        super(object, options);
 
         this.type.push(PixiObjectType.Clickable);
     }

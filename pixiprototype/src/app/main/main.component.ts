@@ -73,8 +73,7 @@ export class MainComponent implements OnInit {
       fillColor: {
         colorInHex: 0x000000
       }
-    },
-      this.app.stage);
+    });
 
     return rectangle;
   }
@@ -93,8 +92,7 @@ export class MainComponent implements OnInit {
       fillColor: {
         colorInHex: 0xFF3300
       }
-    },
-      this.app.stage);
+    });
 
     return rectangle;
   }

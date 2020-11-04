@@ -84,8 +84,7 @@ export class DrawShapeTool extends Tool {
                 fillColor: this.options.fill ? {
                     colorInHex: this.options.color
                 } : undefined
-            },
-                this.playground.activeLayer.container);
+            });
             this.shape = rectangle;
         }
     }
