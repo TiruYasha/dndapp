@@ -8,6 +8,7 @@ import { FogOfWarOptionsComponent } from './main/options/fog-of-war-options/fog-
 import { DrawShapeOptionsComponent } from './main/options/draw-shape-options/draw-shape-options.component';
 import { MapComponent } from './main/map/map.component';
 import { HttpClientModule } from '@angular/common/http';
+import { ChooseUserComponent } from './mock-components/choose-user/choose-user.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { HttpClientModule } from '@angular/common/http';
     MainComponent,
     FogOfWarOptionsComponent,
     DrawShapeOptionsComponent,
-    MapComponent
+    MapComponent,
+    ChooseUserComponent
   ],
   imports: [
     BrowserModule,

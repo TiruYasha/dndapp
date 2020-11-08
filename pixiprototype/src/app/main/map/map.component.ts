@@ -9,6 +9,7 @@ import { CanvasObject } from 'src/app/_models/playground/canvas-objects/canvas-o
 import { CanvasObjectType } from 'src/app/_models/playground/canvas-objects/canvas-object.type';
 import { RectangleModel } from 'src/app/_models/playground/canvas-objects/rectangle.model';
 import { PlaygroundModel } from 'src/app/_models/playground/playground.model';
+import { GameService } from 'src/app/_services/game.service';
 
 @Component({
   selector: 'trpg-map',
@@ -23,7 +24,7 @@ export class MapComponent implements OnInit {
   playgroundIntern: Playground;
   app: Application;
 
-  constructor() { }
+  constructor(private gameService: GameService) { }
 
   ngOnInit(): void {
     this.app = new Application({ width: 700, height: 600, backgroundColor: 0xffffff });
