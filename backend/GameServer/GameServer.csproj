@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>6f19ffd7-5feb-4a00-b3b8-69269594003b</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.9" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="3.1.4" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\AccountPart.Api\AccountPart.Api.csproj" />
+    <ProjectReference Include="..\..\Game.DataAccess\GamePart.Repository.csproj" />
+    <ProjectReference Include="..\..\GamePart.Read\GamePart.Read.csproj" />
+    <ProjectReference Include="..\Api.Game\GamePart.Api.csproj" />
+  </ItemGroup>
+
+
+</Project>

@@ -1,0 +1,32 @@
+version: '3.4'
+
+services:
+  gameserver:
+    image: ${DOCKER_REGISTRY-}gameserver
+    container_name: dnd.gameserver
+    build:
+      context: .
+      dockerfile: GameServer/Dockerfile
+  mydb:
+    image: postgres
+    container_name: dnd.postgres
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    environment: 
+      POSTGRES_PASSWORD: docker
+      POSTGRES_USER: docker
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: dnd.pgadmin
+    environment: 
+      - PGADMIN_DEFAULT_EMAIL=admin@test.com
+      - PGADMIN_DEFAULT_PASSWORD=Welkom@01
+    ports:
+      - 5001:80
+    volumes:
+      - db-data:/var/lib/pgadmin/data
+volumes:
+  db-data:
+    external: true

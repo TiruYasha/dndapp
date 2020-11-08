@@ -16,14 +16,14 @@ export class ChooseUserComponent implements OnInit {
   }
 
   chooseUser(): void {
-    this.mockJoinService.joinGame('9a747b4b-5ce4-428b-8abe-af56ca738c84', '16a29c8f-2952-4b5d-9408-a765b2982239').
+    this.mockJoinService.joinGame('16a29c8f-2952-4b5d-9408-a765b2982239', '9a747b4b-5ce4-428b-8abe-af56ca738c84' ).
       subscribe(token => {
-        this.setToken(token);
+        this.setToken(token.token);
       });
   }
 
   chooseGm(): void {
-    this.mockJoinService.joinGame('9a747b4b-5ce4-428b-8abe-af56ca738c84', 'f0a2c7d8-68cf-4c73-bca7-642784531005').
+    this.mockJoinService.joinGame('f0a2c7d8-68cf-4c73-bca7-642784531005', '9a747b4b-5ce4-428b-8abe-af56ca738c84' ).
       subscribe(token => {
         this.setToken(token.token);
       });
