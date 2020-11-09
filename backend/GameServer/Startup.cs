@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Configuration;
@@ -44,6 +45,7 @@ namespace GameServer
             services.AddTransient<IPlayerReader, PlayerReader>();
             services.AddTransient<IJwtReader, JwtReader>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddSingleton<IUserIdProvider, PlayerIdProvider>();
 
             var connection = Configuration["Game:ConnectionString"];
             services.AddEntityFrameworkNpgsql().AddDbContext<GameContext>

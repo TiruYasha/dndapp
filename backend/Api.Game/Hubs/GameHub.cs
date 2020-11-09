@@ -23,8 +23,8 @@ namespace GamePart.Api.Hubs
         {
             var playerDetails = _jwtReader.GetPlayerDetails();
 
-            await Groups.AddToGroupAsync(playerDetails.PlayerId.ToString(), playerDetails.GameId.ToString());
-
+            await Groups.AddToGroupAsync(Context.ConnectionId, playerDetails.GameId.ToString());
+            
             await base.OnConnectedAsync();
         }
     }

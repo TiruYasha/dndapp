@@ -18,6 +18,6 @@ export class MainComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.playground$ = this.playgroundService.getPlayground();
+    // this.playground$ = this.playgroundService.loadPlayground();
   }
 }
