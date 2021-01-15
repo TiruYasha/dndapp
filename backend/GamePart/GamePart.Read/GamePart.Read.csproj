@@ -5,8 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\backend\Api.Game\GamePart.Api.csproj" />
-    <ProjectReference Include="..\Game.DataAccess\GamePart.Repository.csproj" />
+    <ProjectReference Include="..\Api.Game\GamePart.Api.csproj" />
+    <ProjectReference Include="..\Game.Repository\GamePart.Repository.csproj" />
   </ItemGroup>
 
 </Project>

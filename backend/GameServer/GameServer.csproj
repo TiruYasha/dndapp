@@ -14,10 +14,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\AccountPart.Api\AccountPart.Api.csproj" />
-    <ProjectReference Include="..\..\Game.DataAccess\GamePart.Repository.csproj" />
-    <ProjectReference Include="..\..\GamePart.Read\GamePart.Read.csproj" />
-    <ProjectReference Include="..\Api.Game\GamePart.Api.csproj" />
+    <ProjectReference Include="..\GamePart\Api.Game\GamePart.Api.csproj" />
+    <ProjectReference Include="..\GamePart\Game.Repository\GamePart.Repository.csproj" />
+    <ProjectReference Include="..\GamePart\GamePart.Read\GamePart.Read.csproj" />
   </ItemGroup>
 
 
