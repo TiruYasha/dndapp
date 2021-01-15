@@ -2,12 +2,12 @@ import { Layer } from './layer.model';
 import { Application, Graphics } from 'pixi.js';
 import { ToolType } from '../tools/tool.type';
 import { Tool } from '../tools/tool.model';
-import { createTool } from '../tools/tool-factory.model';
 import { ReplaySubject } from 'rxjs';
 import { triggerAction } from '../pixi-event-manager/pixi-action-manager';
 import { PlaygroundEvents } from '../pixi-event-manager/pixi-events.model';
 
 export class Playground {
+
     private layersSubject = new ReplaySubject<Layer[]>(1);
     private activeLayerSubject = new ReplaySubject<Layer>(1);
     private activeToolSubject = new ReplaySubject<Tool>(1);
@@ -68,17 +68,25 @@ export class Playground {
         return this._layers.filter(l => l.name === name)[0];
     }
 
-    setActiveTool(toolType: ToolType): void {
-        if (this._activeTool) {
-            this._activeTool.disable();
-        }
+    // setActiveTool(toolType: ToolType): Tool {
+    //     if (this._activeTool) {
+    //         this._activeTool.disable();
+    //     }
 
-        this._activeTool = createTool(toolType, this);
-        this._activeTool.enable();
-        this.activeToolSubject.next(this._activeTool);
-    }
+    //     this._activeTool = createTool(toolType, this);
+    //     this._activeTool.enable();
+    //     this.activeToolSubject.next(this._activeTool);
+    //     return this._activeTool;
+    // }
 
     setActiveLayer(layer: Layer): void {
+        this._activeLayer = layer;
+        this.activeLayerSubject.next(this._activeLayer);
+        triggerAction(PlaygroundEvents.layerSwitched, this._activeLayer, true);
+    }
+
+    setActiveLayerByName(name: string) {
+        const layer  = this.layers.filter(l => l.name === name)[0];
         this._activeLayer = layer;
         this.activeLayerSubject.next(this._activeLayer);
         triggerAction(PlaygroundEvents.layerSwitched, this._activeLayer, true);

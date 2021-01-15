@@ -6,16 +6,20 @@ import { MoveTool } from './move-tool/move-tool';
 import { Tool } from './tool.model';
 import { ToolType } from './tool.type';
 
-export function createTool(toolType: ToolType, playground: Playground): Tool {
-    switch (toolType) {
-        case ToolType.Selector:
-            return new MoveTool(playground);
-        case ToolType.DrawShape:
-            return new DrawShapeTool(playground);
-        case ToolType.FogOfWar:
-            return new FogOfWarTool(playground);
+@Injectable({
+    providedIn: 'root'
+})
+export class ToolFactory {
+    createTool(toolType: ToolType, playground: Playground): Tool {
+        switch (toolType) {
+            case ToolType.Selector:
+                return new MoveTool(playground);
+            case ToolType.DrawShape:
+                return new DrawShapeTool(playground);
+            case ToolType.FogOfWar:
+                return new FogOfWarTool(playground);
+        }
+
+        return null;
     }
-
-    return null;
 }
-
