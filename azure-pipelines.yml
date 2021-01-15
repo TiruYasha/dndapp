@@ -33,3 +33,10 @@ stages:
       - job:
         steps:
           - script: echo Hello, world!
+
+- stage: deploy_prod
+  displayName: Deploy to production
+  jobs:
+    - job:
+      steps:
+        - script: echo Hello, world!
