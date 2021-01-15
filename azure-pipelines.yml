@@ -23,7 +23,9 @@ stages:
     - task: Docker@2
       displayName: Build an image
       inputs:
-        command: build
+        command: buildAndPush
+        repository: 'tiruyasha'
+        containerRegistry: 'dnd_app'
         dockerfile: '$(Build.SourcesDirectory)/pixiprototype/Dockerfile'
         tags: |
           $(tag)
