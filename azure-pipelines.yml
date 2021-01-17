@@ -37,6 +37,8 @@ stages:
             publishLocation: 'Container'
 - stage: deploy_dev
   displayName: Deploy to development
+  dependsOn:
+    - build
   variables:
   - group: DEV
   jobs:
@@ -59,3 +61,10 @@ stages:
                   tokenSuffix: '}#'
                   useLegacyPattern: false
                   enableTelemetry: true
+              - task: CopyFilesOverSSH@0
+                inputs:
+                  sshEndpoint: 'DigitalOceanDndApp'
+                  sourceFolder: 'pixiprototype/dist'
+                  contents: '**'
+                  targetFolder: '/home/dndapp/www'
+                  readyTimeout: '20000'
