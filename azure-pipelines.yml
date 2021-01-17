@@ -31,6 +31,18 @@ stages:
             customCommand: 'run build:prod --prod'
         - task: PublishBuildArtifacts@1
           inputs:
-            PathtoPublish: '$(Build.ArtifactStagingDirectory)/pixiprototype/dist'
+            PathtoPublish: 'pixiprototype/dist'
             ArtifactName: 'pixiprototype'
             publishLocation: 'Container'
+- stage: deploy_dev
+  displayName: Deploy to development
+  variables:
+  - group: DEV
+  jobs:
+    - deployment: DeployWeb
+      environment: DEV
+      strategy:
+        runOnce:
+          deploy:
+            steps:
+              - script: echo Hello, development world!
