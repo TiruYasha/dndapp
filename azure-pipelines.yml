@@ -32,6 +32,7 @@ stages:
         - task: PublishBuildArtifacts@1
           inputs:
             PathtoPublish: 'pixiprototype/dist'
+
             ArtifactName: 'pixiprototype'
             publishLocation: 'Container'
 - stage: deploy_dev
@@ -46,3 +47,15 @@ stages:
           deploy:
             steps:
               - script: echo Hello, development world!
+              - task: replacetokens@3
+                inputs:
+                  targetFiles: 'pixiprototype/dist/**/main*.js'
+                  encoding: 'auto'
+                  writeBOM: true
+                  verbosity: 'detailed'
+                  actionOnMissing: 'warn'
+                  keepToken: false
+                  tokenPrefix: '#{'
+                  tokenSuffix: '}#'
+                  useLegacyPattern: false
+                  enableTelemetry: true
