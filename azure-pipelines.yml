@@ -24,6 +24,6 @@ stages:
         inputs:
           versionSpec: "10.x"
       - script: npm install
-      - script: npm run build -- --prod
+      - script: npm run build:prod
       - publish: dist
         artifact: dist
