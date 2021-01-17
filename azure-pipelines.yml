@@ -51,7 +51,7 @@ stages:
               - script: echo Hello, development world!
               - task: replacetokens@3
                 inputs:
-                  targetFiles: 'pixiprototype/main*.js'
+                  targetFiles: '../pixiprototype/**/main*.js'
                   encoding: 'auto'
                   writeBOM: true
                   verbosity: 'detailed'
