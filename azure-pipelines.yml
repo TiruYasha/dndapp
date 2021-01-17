@@ -64,7 +64,7 @@ stages:
               - task: CopyFilesOverSSH@0
                 inputs:
                   sshEndpoint: 'DigitalOceanDndApp'
-                  sourceFolder: 'pixiprototype/dist'
+                  sourceFolder: 'pixiprototype'
                   contents: '**'
                   targetFolder: '/home/dndapp/www'
                   readyTimeout: '20000'
