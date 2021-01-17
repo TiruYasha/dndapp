@@ -23,7 +23,22 @@ stages:
     - task: Docker@2
       displayName: Build an image
       inputs:
-        command: build
+        command: buildAndPush
+        repository: 'tiruyasha'
+        containerRegistry: 'dnd_app'
         dockerfile: '$(Build.SourcesDirectory)/pixiprototype/Dockerfile'
         tags: |
           $(tag)
+- stage: Deploy
+  displayName: Deploy to digitalocean docker
+  jobs:
+      - job:
+        steps:
+          - script: echo Hello, world!
+
+- stage: deploy_prod
+  displayName: Deploy to production
+  jobs:
+    - job:
+      steps:
+        - script: echo Hello, world!
