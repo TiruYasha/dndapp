@@ -51,7 +51,7 @@ stages:
               - script: echo Hello, development world!
               - task: replacetokens@3
                 inputs:
-                  targetFiles: 'pixiprototype/dist/**/main*.js'
+                  targetFiles: 'pixiprototype/main*.js'
                   encoding: 'auto'
                   writeBOM: true
                   verbosity: 'detailed'
@@ -64,7 +64,7 @@ stages:
               - task: CopyFilesOverSSH@0
                 inputs:
                   sshEndpoint: 'DigitalOceanDndApp'
-                  sourceFolder: 'pixiprototype'
+                  sourceFolder: '$(System.DefaultWorkingDirectory)/pixiprototype'
                   contents: '**'
                   targetFolder: '/home/dndapp/www'
                   readyTimeout: '20000'
