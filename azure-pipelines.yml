@@ -31,6 +31,6 @@ stages:
             customCommand: 'run build:prod --prod'
         - task: PublishBuildArtifacts@1
           inputs:
-            PathtoPublish: 'dist'
+            PathtoPublish: '$(Build.ArtifactStagingDirectory)/dist'
             ArtifactName: 'pixiprototype'
             publishLocation: 'Container'
