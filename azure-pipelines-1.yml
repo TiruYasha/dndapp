@@ -33,4 +33,15 @@ stages:
           inputs:
             command: 'build'
             projects: 'backend/DndBackend.sln'
+        - task: DotNetCoreCLI@2
+          inputs:
+            command: 'publish'
+            publishWebProjects: true
+            arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+            zipAfterPublish: false
+        - task: PublishBuildArtifacts@1
+          inputs:
+            pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
+            artifactName: 'dndbackend'
+        
 
