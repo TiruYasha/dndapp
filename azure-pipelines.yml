@@ -25,6 +25,10 @@ stages:
     pool:
       vmImage: 'ubuntu-latest'
     steps:
+        - task: ManualIntervention@8
+          inputs:
+            instructions: 'Please approve this this'
+            emailRecipients: 'renebuunk1996@gmail.com'
         - task: Npm@1
           inputs:
             command: 'install'
@@ -54,6 +58,7 @@ stages:
           deploy:
             steps:
               - script: echo Hello, development world!
+           
               - task: replacetokens@3
                 inputs:
                   targetFiles: '../pixiprototype/**/main*.js'
