@@ -37,6 +37,8 @@ stages:
             publishLocation: 'Container'
 - stage: deploy_dev
   displayName: Deploy to development
+  dependsOn:
+    - build
   variables:
   - group: DEV
   jobs:
@@ -49,7 +51,7 @@ stages:
               - script: echo Hello, development world!
               - task: replacetokens@3
                 inputs:
-                  targetFiles: 'pixiprototype/dist/**/main*.js'
+                  targetFiles: '../pixiprototype/**/main*.js'
                   encoding: 'auto'
                   writeBOM: true
                   verbosity: 'detailed'
@@ -59,3 +61,10 @@ stages:
                   tokenSuffix: '}#'
                   useLegacyPattern: false
                   enableTelemetry: true
+              - task: CopyFilesOverSSH@0
+                inputs:
+                  sshEndpoint: 'DigitalOceanDndApp'
+                  sourceFolder: '../pixiprototype/pixiprototype'
+                  contents: '**'
+                  targetFolder: '/home/dndapp/www'
+                  readyTimeout: '20000'
