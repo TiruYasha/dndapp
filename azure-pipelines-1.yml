@@ -44,12 +44,26 @@ stages:
             pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
             artifactName: 'dndbackend'
             publishLocation: 'Container'
-        - task: CopyFilesOverSSH@0
-          inputs:
-            sshEndpoint: 'DigitalOceanDndApp'
-            sourceFolder: 'dndbackend/GameServer'
-            contents: '**'
-            targetFolder: '/home/dndappdotnet/www'
-            readyTimeout: '20000'
-        
+- stage: deploy_dev
+  displayName: Deploy to development
+  dependsOn:
+    - build
+  variables:
+  - group: DEV
+  jobs:
+    - deployment: DeployWeb
+      environment: DEV
+      strategy:
+        runOnce:
+          deploy:
+            steps:
+              - script: echo Hello, development world!
+              - task: CopyFilesOverSSH@0
+                inputs:
+                  sshEndpoint: 'DigitalOceanDndApp'
+                  sourceFolder: '../dndbackend/GameServer'
+                  contents: '**'
+                  targetFolder: '/home/dndapp/www'
+                  readyTimeout: '20000'
+      
 
