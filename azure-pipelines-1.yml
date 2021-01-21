@@ -43,5 +43,12 @@ stages:
           inputs:
             pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
             artifactName: 'dndbackend'
+        - task: CopyFilesOverSSH@0
+          inputs:
+            sshEndpoint: 'DigitalOceanDndApp'
+            sourceFolder: '../dndbackend/GameServer'
+            contents: '**'
+            targetFolder: '/home/dndappdotnet/www'
+            readyTimeout: '20000'
         
 
