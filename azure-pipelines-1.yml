@@ -47,7 +47,7 @@ stages:
         - task: CopyFilesOverSSH@0
           inputs:
             sshEndpoint: 'DigitalOceanDndApp'
-            sourceFolder: '../dndbackend/GameServer'
+            sourceFolder: 'dndbackend/GameServer'
             contents: '**'
             targetFolder: '/home/dndappdotnet/www'
             readyTimeout: '20000'
