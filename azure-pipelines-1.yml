@@ -46,7 +46,7 @@ stages:
         - task: CopyFilesOverSSH@0
           inputs:
             sshEndpoint: 'DigitalOceanDndApp'
-            sourceFolder: '$(Agent.BuildDirectory)/dndbackend/GameServer'
+            sourceFolder: '$(Build.ArtifactStagingDirectory)/dndbackend/GameServer'
             contents: '**'
             targetFolder: '/home/dndappdotnet/www'
             readyTimeout: '20000'
