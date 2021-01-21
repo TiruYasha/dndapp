@@ -63,7 +63,7 @@ stages:
                   sshEndpoint: 'DigitalOceanDndApp'
                   sourceFolder: '../dndbackend/GameServer'
                   contents: '**'
-                  targetFolder: '/home/dndapp/www'
+                  targetFolder: '/home/dndappdotnet/www'
                   readyTimeout: '20000'
       
 
