@@ -41,12 +41,13 @@ stages:
             zipAfterPublish: false
         - task: PublishBuildArtifacts@1
           inputs:
-            pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
+            pathtoPublish: 'dndbackend/dist' 
             artifactName: 'dndbackend'
+            publishLocation: 'Container'
         - task: CopyFilesOverSSH@0
           inputs:
             sshEndpoint: 'DigitalOceanDndApp'
-            sourceFolder: '$(Build.ArtifactStagingDirectory)/dndbackend'
+            sourceFolder: '../dndbackend/dndbackend'
             contents: '**'
             targetFolder: '/home/dndappdotnet/www'
             readyTimeout: '20000'
