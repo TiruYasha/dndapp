@@ -41,7 +41,7 @@ stages:
             zipAfterPublish: false
         - task: PublishBuildArtifacts@1
           inputs:
-            pathtoPublish: 'dndbackend/dist' 
+            pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
             artifactName: 'dndbackend'
             publishLocation: 'Container'
         - task: CopyFilesOverSSH@0
