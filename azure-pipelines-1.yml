@@ -12,9 +12,11 @@ trigger:
       - backend
 
 variables:
+  group: DEV
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
+
 
 stages:
 - stage: Build
