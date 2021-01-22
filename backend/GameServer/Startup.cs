@@ -110,9 +110,9 @@ namespace GameServer
                 app.UseDeveloperExceptionPage();
                 var seeder = new GameSeeder(gameContext);
                 seeder.SeedDb();
+                app.UseHttpsRedirection();
             }
-
-            app.UseHttpsRedirection();
+         
             app.UseSwagger();
 
             app.UseSwaggerUI(c =>
