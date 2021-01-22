@@ -58,6 +58,21 @@ stages:
           deploy:
             steps:
               - script: echo Hello, development world!
+              - task: replacetokens@3
+                inputs:
+                  targetFiles: |
+                    **/**/appsettings.json
+                    **/appsettings.json
+                  encoding: 'auto'
+                  writeBOM: true
+                  escapeType: 'json'
+                  verbosity: 'detailed'
+                  actionOnMissing: 'warn'
+                  keepToken: false
+                  tokenPrefix: '#{'
+                  tokenSuffix: '}#'
+                  useLegacyPattern: false
+                  enableTelemetry: true
               - task: CopyFilesOverSSH@0
                 inputs:
                   sshEndpoint: 'DigitalOceanDndApp'
