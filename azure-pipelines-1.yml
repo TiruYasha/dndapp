@@ -60,7 +60,6 @@ stages:
               - script: echo Hello, development world!
               - task: replacetokens@3
                 inputs:
-                  rootDirectory: '$(Build.ArtifactStagingDirectory)'
                   targetFiles: |
                     **/**/appsettings.json
                     **/appsettings.json
