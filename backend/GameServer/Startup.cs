@@ -49,7 +49,6 @@ namespace GameServer
                     builder.AllowAnyMethod();
                     builder.AllowAnyHeader();
                     builder.AllowAnyOrigin();
-                    builder.AllowCredentials();
                 });
             });
 
