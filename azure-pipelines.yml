@@ -57,7 +57,7 @@ stages:
            
               - task: replacetokens@3
                 inputs:
-                  targetFiles: '../pixiprototype/**/main*.js'
+                  targetFiles: '../**/**/main.*.js'
                   encoding: 'auto'
                   writeBOM: true
                   verbosity: 'detailed'
