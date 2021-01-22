@@ -25,6 +25,7 @@ stages:
     pool:
       vmImage: 'ubuntu-latest'
     steps:
+        - script: echo $(GameConnectionString) Hello, development world!
         - task: UseDotNet@2
           inputs:
             packageType: 'sdk'
@@ -57,7 +58,7 @@ stages:
         runOnce:
           deploy:
             steps:
-              - script: echo Hello, development world!
+              - script: echo $(GameConnectionString) Hello, development world!
               - task: replacetokens@3
                 inputs:
                   rootDirectory: '../'
