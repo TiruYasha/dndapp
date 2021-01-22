@@ -25,6 +25,7 @@ stages:
     pool:
       vmImage: 'ubuntu-latest'
     steps:
+        - script: echo Hello $(gameApiUrl), development world!
         - task: Npm@1
           inputs:
             command: 'install'
@@ -53,7 +54,7 @@ stages:
         runOnce:
           deploy:
             steps:
-              - script: echo Hello, development world!
+              - script: echo Hello $(gameApiUrl), development world!
            
               - task: replacetokens@3
                 inputs:
