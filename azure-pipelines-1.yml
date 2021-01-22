@@ -12,9 +12,7 @@ trigger:
       - backend
 
 variables:
-  solution: '**/*.sln'
-  buildPlatform: 'Any CPU'
-  buildConfiguration: 'Release'
+- group: DEV
 
 stages:
 - stage: Build
@@ -25,6 +23,7 @@ stages:
     pool:
       vmImage: 'ubuntu-latest'
     steps:
+        - script: echo  "Hello, $(GameConnectionString) development world!"
         - task: UseDotNet@2
           inputs:
             packageType: 'sdk'
@@ -57,7 +56,23 @@ stages:
         runOnce:
           deploy:
             steps:
-              - script: echo Hello, development world!
+              - script: echo "$(GameConnectionString) Hello, development world!"
+              - task: replacetokens@3
+                inputs:
+                  rootDirectory: '../'
+                  targetFiles: |
+                    **/**/appsettings.json
+                    **/appsettings.json
+                  encoding: 'auto'
+                  writeBOM: true
+                  escapeType: 'json'
+                  verbosity: 'detailed'
+                  actionOnMissing: 'warn'
+                  keepToken: false
+                  tokenPrefix: '#{'
+                  tokenSuffix: '}#'
+                  useLegacyPattern: false
+                  enableTelemetry: true
               - task: CopyFilesOverSSH@0
                 inputs:
                   sshEndpoint: 'DigitalOceanDndApp'
