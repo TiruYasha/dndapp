@@ -58,7 +58,10 @@ stages:
            
               - task: replacetokens@3
                 inputs:
-                  targetFiles: '../**/**/main.*.js'
+                  rootDirectory: '../'
+                  targetFiles: |
+                    **/**/main.*.js
+                    **/main.*.js
                   encoding: 'auto'
                   writeBOM: true
                   verbosity: 'detailed'
