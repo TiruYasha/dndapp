@@ -48,7 +48,7 @@ namespace GameServer
                     builder.AllowAnyOrigin();
                     builder.AllowAnyMethod();
                     builder.AllowAnyHeader();
-                    builder.WithOrigins("http://localhost:4200");
+                    builder.AllowAnyOrigin();
                     builder.AllowCredentials();
                 });
             });
