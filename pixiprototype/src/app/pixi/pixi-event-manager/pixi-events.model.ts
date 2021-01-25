@@ -1,10 +1,6 @@
-export type PixiEvent = PlaygroundEvents | ObjectEvents;
-
-export enum PlaygroundEvents {
+export enum PixiEventName {
     LayerSwitched,
-}
 
-export enum ObjectEvents {
     ObjectSelected,
     ObjectMoved
 }

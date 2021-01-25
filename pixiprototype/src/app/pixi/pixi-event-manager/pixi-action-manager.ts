@@ -1,10 +1,13 @@
 import { Observable, ReplaySubject, Subject } from 'rxjs';
-import { PixiAction } from './pixi-action.model';
-import { PixiEvent } from './pixi-events.model';
+import { PixiAction, PixiEvent } from './pixi-action.model';
+import { PixiEventName } from './pixi-events.model';
 
 const actions: PixiAction[] = [];
 
-export function listenToAction<T>(event: PixiEvent): Observable<T> {
+const allEventsSubject = new Subject<PixiEvent<any>>();
+export const allEvents$ = allEventsSubject.asObservable();
+
+export function listenToAction<T>(event: PixiEventName): Observable<PixiEvent<T>> {
     const action = getAction(event);
 
     if (action) { return action.subject.asObservable(); }
@@ -17,21 +20,26 @@ export function listenToAction<T>(event: PixiEvent): Observable<T> {
     return newAction.subject.asObservable();
 }
 
-export function triggerAction<T>(event: PixiEvent, content: T, replayable = false): void {
+export function triggerAction<T>(event: PixiEventName, content: T, replayable = false): void {
     const action = getAction(event);
-
+    const pixiEvent: PixiEvent<any> = {
+        content: content,
+        event: event
+    }
     if (action) {
-        action.subject.next(content);
+        action.subject.next(pixiEvent);
+        allEventsSubject.next(pixiEvent);
     } else if (replayable) {
         const newAction: PixiAction = {
             event: event,
             subject: new ReplaySubject<T>(1)
         };
         actions.push(newAction);
-        newAction.subject.next(content);
+        newAction.subject.next(pixiEvent);
+        allEventsSubject.next(pixiEvent);
     }
 }
 
-function getAction(event: PixiEvent): PixiAction {
+function getAction(event: PixiEventName): PixiAction {
     return actions.filter(a => a.event === event)[0];
 }

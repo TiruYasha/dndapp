@@ -4,7 +4,7 @@ import { ToolType } from '../tools/tool.type';
 import { Tool } from '../tools/tool.model';
 import { ReplaySubject } from 'rxjs';
 import { triggerAction } from '../pixi-event-manager/pixi-action-manager';
-import { PlaygroundEvents } from '../pixi-event-manager/pixi-events.model';
+import { PixiEventName } from '../pixi-event-manager/pixi-events.model';
 
 export class Playground {
 
@@ -82,14 +82,14 @@ export class Playground {
     setActiveLayer(layer: Layer): void {
         this._activeLayer = layer;
         this.activeLayerSubject.next(this._activeLayer);
-        triggerAction(PlaygroundEvents.LayerSwitched, this._activeLayer, true);
+        triggerAction(PixiEventName.LayerSwitched, this._activeLayer, true);
     }
 
     setActiveLayerByName(name: string) {
         const layer  = this.layers.filter(l => l.name === name)[0];
         this._activeLayer = layer;
         this.activeLayerSubject.next(this._activeLayer);
-        triggerAction(PlaygroundEvents.LayerSwitched, this._activeLayer, true);
+        triggerAction(PixiEventName.LayerSwitched, this._activeLayer, true);
     }
 
     private layersChanged(): void {
