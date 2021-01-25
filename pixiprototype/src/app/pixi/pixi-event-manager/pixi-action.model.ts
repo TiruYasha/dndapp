@@ -1,6 +1,7 @@
 import { Subject } from 'rxjs';
+import { PixiEvent } from './pixi-events.model';
 
 export interface PixiAction{
-    name: string;
+    event: PixiEvent;
     subject: Subject<any>;
 }

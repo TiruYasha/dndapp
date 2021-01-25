@@ -1,6 +1,10 @@
-export class PlaygroundEvents {
+export type PixiEvent = PlaygroundEvents | ObjectEvents;
 
-    static objectSelected = 'objectSelected';
-    static layerSwitched = 'layerSwitched';
+export enum PlaygroundEvents {
+    LayerSwitched,
+}
 
+export enum ObjectEvents {
+    ObjectSelected,
+    ObjectMoved
 }

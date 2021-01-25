@@ -82,14 +82,14 @@ export class Playground {
     setActiveLayer(layer: Layer): void {
         this._activeLayer = layer;
         this.activeLayerSubject.next(this._activeLayer);
-        triggerAction(PlaygroundEvents.layerSwitched, this._activeLayer, true);
+        triggerAction(PlaygroundEvents.LayerSwitched, this._activeLayer, true);
     }
 
     setActiveLayerByName(name: string) {
         const layer  = this.layers.filter(l => l.name === name)[0];
         this._activeLayer = layer;
         this.activeLayerSubject.next(this._activeLayer);
-        triggerAction(PlaygroundEvents.layerSwitched, this._activeLayer, true);
+        triggerAction(PlaygroundEvents.LayerSwitched, this._activeLayer, true);
     }
 
     private layersChanged(): void {

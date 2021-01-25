@@ -14,7 +14,7 @@ import { createContainer, createRectangle } from './move-tool-object-creator';
 import { MultiSelectorTool } from './multi-selector-tool';
 import { takeUntil } from 'rxjs/operators';
 import { Layer } from '../../pixi-structure/layer.model';
-import { PlaygroundEvents } from '../../pixi-event-manager/pixi-events.model';
+import { ObjectEvents, PlaygroundEvents } from '../../pixi-event-manager/pixi-events.model';
 
 export class MoveTool extends Tool {
     private destroySubject = new Subject();
@@ -41,11 +41,11 @@ export class MoveTool extends Tool {
     enable(): void {
         this.setupMoveTool();
 
-        listenToAction<Layer>(PlaygroundEvents.layerSwitched)
+        listenToAction<Layer>(PlaygroundEvents.LayerSwitched)
             .pipe(takeUntil(this.destroySubject))
             .subscribe((newActiveLayer) => this.newActiveLayerEnabled(newActiveLayer));
 
-        listenToAction<ObjectSelected>(PlaygroundEvents.objectSelected)
+        listenToAction<ObjectSelected>(ObjectEvents.ObjectSelected)
             .pipe(takeUntil(this.destroySubject))
             .subscribe(o => {
                 this.childSelectedObject = o.object;

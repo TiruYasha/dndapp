@@ -15,9 +15,6 @@ export class ToolService {
 
     constructor(private playgroundService: PlaygroundService, private toolFactory: ToolFactory) {
         this.selectedToolSubject = new ReplaySubject(1);
-        // playgroundService.playground$.subscribe(p => {
-        //     this.playgroundChanged(p);
-        // });
     }
 
     getTool(): Observable<Tool> {
@@ -29,14 +26,7 @@ export class ToolService {
         if (this.selectedTool) {
             this.selectedTool.disable();
         }
-
         this.selectedTool = this.toolFactory.createTool(toolType, this.playgroundService.playground);
         this.selectedTool.enable();
-    }
-
-    private playgroundChanged(playground: Playground): void {
-        if (!this.selectedTool) { return; }
-        this.selectedTool.disable();
-        this.selectedTool = this.toolFactory.createTool(this.selectedTool.type, playground);
     }
 }

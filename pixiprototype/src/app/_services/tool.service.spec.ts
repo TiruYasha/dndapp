@@ -5,50 +5,52 @@ import { ToolFactory } from '../pixi/tools/tool-factory.model';
 import { ToolType } from '../pixi/tools/tool.type';
 import { Tool } from '../pixi/tools/tool.model';
 import { ToolService } from './tool.service';
-import { of } from 'rxjs';
+
+import { instance, mock, reset, verify, when } from 'ts-mockito';
+import { Playground } from '../pixi/pixi-structure/playground.model';
+import { MoveTool } from '../pixi/tools/move-tool/move-tool';
 
 describe('ToolService', () => {
   let toolService: ToolService;
-  let playgroundSpy: jasmine.SpyObj<PlaygroundService>;
-  let toolFactorySpy: jasmine.SpyObj<ToolFactory>;
+  let mockedPlaygroundService: PlaygroundService;
+  let mockedToolFactory: ToolFactory;
+  let mockedPlayground: Playground;
+  let mockedMoveTool: MoveTool;
 
   beforeEach(() => {
-    const pSpy = jasmine.createSpyObj('PlaygroundService', ['test'], []);
-    const tSpy = jasmine.createSpyObj('ToolFactory', ['createTool']);
-    Object.defineProperty(pSpy, 'playground', {
-      ...Object.getOwnPropertyDescriptor(pSpy, 'playground'),
-      enumerable: true,
-      configurable: true,
-      get: () => {}
-    });
-    //spyOnProperty(pSpy, 'playground').and.returnValue(of({}));
+    mockedPlaygroundService = mock(PlaygroundService)
+    mockedToolFactory = mock(ToolFactory);
+    mockedMoveTool = mock(MoveTool);
+    mockedPlayground = mock(Playground);
 
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
       providers: [
         ToolService,
-        { provide: PlaygroundService, useValue: pSpy },
-        { provide: ToolFactory, useValue: tSpy }
+        { provide: PlaygroundService, useValue: instance(mockedPlaygroundService) },
+        { provide: ToolFactory, useValue: instance(mockedToolFactory) }
       ]
     });
     toolService = TestBed.inject(ToolService);
-
-    playgroundSpy = TestBed.inject(PlaygroundService) as jasmine.SpyObj<PlaygroundService>;
-    toolFactorySpy = TestBed.inject(ToolFactory) as jasmine.SpyObj<ToolFactory>;
-
   });
 
   it('should be created', () => {
     expect(toolService).toBeTruthy();
   });
 
-  it('should select tool when playgroundService has playground', () => {
-    spyOnProperty(playgroundSpy, 'playground', 'get').and.returnValue(<any>{});
-    const toolMock = jasmine.createSpyObj('Tool', ['enable']) as jasmine.SpyObj<Tool>;
-    toolFactorySpy.createTool.and.returnValue(toolMock);
+  it('should select tool when playgroundService has playground',  () => {
+    const playground = instance(mockedPlayground);
+    const moveTool = instance(mockedMoveTool);
 
-    toolService.selectTool(ToolType.Selector);
+    const toolType = ToolType.Selector;
+  
+    when(mockedPlaygroundService.playground).thenReturn(playground);
+    when(mockedToolFactory.createTool(toolType, playground))
+      .thenReturn(moveTool)
 
-    expect(toolMock.enable).toHaveBeenCalled();
+    toolService.selectTool(toolType);
+
+    verify(mockedPlaygroundService.playground).called();
+    verify(mockedMoveTool.enable()).called();
   });
 });
