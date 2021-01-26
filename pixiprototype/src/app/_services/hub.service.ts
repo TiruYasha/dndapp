@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HubConnectionBuilder } from '@aspnet/signalr';
+import { HubConnectionBuilder } from '@microsoft/signalr';
 import { environment } from 'src/environments/environment';
 import { Hub } from '../_helpers/hub';
 
@@ -8,13 +8,14 @@ import { Hub } from '../_helpers/hub';
 })
 export class HubService {
 
-  constructor() { }
+  constructor() {
+  }
 
   buildConnection(hubName: string): Hub {
     const hubConnection = new HubConnectionBuilder()
-      .withUrl(`${environment.gameApi}${hubName}?access_token=${this.getAccessToken()}`)
+      .withUrl(`${environment.gameApi}hub/${hubName}?access_token=${this.getAccessToken()}`)
       .build();
-      
+
     return new Hub(hubConnection);
   }
 

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { GameService } from '../_services/game.service';
 
 @Component({
   selector: 'trpg-game',

@@ -50,6 +50,14 @@ namespace GameServer
                     builder.AllowAnyHeader();
                     builder.AllowAnyOrigin();
                 });
+
+                options.AddPolicy("signalr", builder =>
+                {
+                    builder.WithOrigins("http://localhost:4200")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .AllowCredentials();
+                });
             });
 
             var gameAssembly = typeof(PlaygroundController).Assembly;
@@ -82,7 +90,7 @@ namespace GameServer
                         // If the request is for our hub...
                         var path = context.HttpContext.Request.Path;
                         if (!string.IsNullOrEmpty(accessToken) &&
-                            (path.StartsWithSegments("/gamehub")))
+                            (path.StartsWithSegments("/hub")))
                         {
                             // Read the token out of the query string
                             context.Token = accessToken;
@@ -107,7 +115,7 @@ namespace GameServer
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-              
+
                 app.UseHttpsRedirection();
             }
             var seeder = new GameSeeder(gameContext);
@@ -120,14 +128,14 @@ namespace GameServer
                 c.RoutePrefix = string.Empty;
             });
 
+            app.UseCors("signalr");
             app.UseRouting();
-            app.UseCors();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                endpoints.MapHub<GameHub>("/gamehub");
+                endpoints.MapHub<GameHub>("/hub/game");
             });
         }
     }

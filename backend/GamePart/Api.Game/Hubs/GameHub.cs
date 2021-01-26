@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace GamePart.Api.Hubs
 {
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    public class GameHub : Hub
+    public partial class GameHub : Hub
     {
         private readonly IJwtReader _jwtReader;
 

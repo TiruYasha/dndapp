@@ -1,4 +1,4 @@
-import { HubConnection } from "@aspnet/signalr";
+import { HubConnection } from "@microsoft/signalr";
 import { Method } from "../_models/hub/method.model";
 
 export class Hub {

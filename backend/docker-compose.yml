@@ -7,6 +7,8 @@ services:
     build:
       context: .
       dockerfile: GameServer/Dockerfile
+    ports:
+      - "5003:443"
   mydb:
     image: postgres
     container_name: dnd.postgres

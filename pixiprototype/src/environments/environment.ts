@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  gameApi: 'https://localhost:49155/'
+  gameApi: 'https://localhost:5003/'
 };
 
 /*
