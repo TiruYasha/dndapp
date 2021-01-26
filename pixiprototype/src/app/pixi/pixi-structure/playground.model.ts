@@ -85,8 +85,8 @@ export class Playground {
         triggerAction(PixiEventName.LayerSwitched, this._activeLayer, true);
     }
 
-    setActiveLayerByName(name: string) {
-        const layer  = this.layers.filter(l => l.name === name)[0];
+    setActiveLayerByName(name: string): void {
+        const layer = this.layers.filter(l => l.name === name)[0];
         this._activeLayer = layer;
         this.activeLayerSubject.next(this._activeLayer);
         triggerAction(PixiEventName.LayerSwitched, this._activeLayer, true);

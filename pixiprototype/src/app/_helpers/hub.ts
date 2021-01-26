@@ -1,5 +1,5 @@
-import { HubConnection } from "@microsoft/signalr";
-import { Method } from "../_models/hub/method.model";
+import { HubConnection } from '@microsoft/signalr';
+import { HubCommand, HubMethod } from '../_models/hub/method.model';
 
 export class Hub {
 
@@ -11,7 +11,14 @@ export class Hub {
         return this.connection.start();
     }
 
-    on<T>(methodName: string, callback: (data: Method<T>) => any) {
+    on<T>(methodName: string, callback: (data: HubMethod<T>) => any): void {
         this.connection.on(methodName, callback);
+    }
+
+    send<T>(methodName: string, data: T): void {
+        const contentWithMetaData: HubCommand<T> = {
+            data
+        };
+        this.connection.send(methodName, contentWithMetaData);
     }
 }

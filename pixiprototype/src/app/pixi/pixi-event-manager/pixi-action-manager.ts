@@ -13,7 +13,7 @@ export function listenToAction<T>(event: PixiEventName): Observable<PixiEvent<T>
     if (action) { return action.subject.asObservable(); }
 
     const newAction: PixiAction = {
-        event: event,
+        event,
         subject: new Subject<T>()
     };
     actions.push(newAction);
@@ -23,15 +23,15 @@ export function listenToAction<T>(event: PixiEventName): Observable<PixiEvent<T>
 export function triggerAction<T>(event: PixiEventName, content: T, replayable = false): void {
     const action = getAction(event);
     const pixiEvent: PixiEvent<any> = {
-        content: content,
-        event: event
-    }
+        content,
+        event
+    };
     if (action) {
         action.subject.next(pixiEvent);
         allEventsSubject.next(pixiEvent);
     } else if (replayable) {
         const newAction: PixiAction = {
-            event: event,
+            event,
             subject: new ReplaySubject<T>(1)
         };
         actions.push(newAction);

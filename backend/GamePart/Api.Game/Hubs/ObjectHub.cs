@@ -14,9 +14,9 @@ namespace GamePart.Api.Hubs
     public partial class GameHub
     {
 
-        public async Task MoveObject(MoveObjectCommand command)
+        public async Task MoveObject(HubCommand<MoveObjectCommand> command)
         {
-
+            ;
         }
     }
 }

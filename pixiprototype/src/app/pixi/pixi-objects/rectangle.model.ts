@@ -7,7 +7,6 @@ export class Rectangle extends ShapePixiObject {
 
     constructor(options: RectangleOptions) {
         const rectangle = new Graphics();
-        //rectangle.lineStyle(options.lineStyle.width, options.lineStyle.color, options.lineStyle.alpha);
 
         if (options.fillColor) {
             rectangle.beginFill(options.fillColor.colorInHex);
