@@ -71,7 +71,8 @@ export class DrawShapeTool extends Tool {
 
     private setupShape(): void {
         if (this.options.shape === DrawShapeType.Rectangle) {
-            const rectangle = new Rectangle({
+            // TODO shapeId generate
+            const rectangle = new Rectangle('', {
                 height: 2,
                 width: 2,
                 x: 0,

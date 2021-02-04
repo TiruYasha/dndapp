@@ -4,7 +4,7 @@ import { ToolType } from '../tools/tool.type';
 import { Tool } from '../tools/tool.model';
 import { ReplaySubject } from 'rxjs';
 import { triggerAction } from '../pixi-event-manager/pixi-action-manager';
-import { PixiEventName } from '../pixi-event-manager/pixi-events.model';
+import { PixiEventName } from '../pixi-event-manager/pixi-events.enum';
 
 export class Playground {
 
@@ -43,7 +43,8 @@ export class Playground {
     get height(): number { return this.app.view.height; }
 
     addLayerQuick(name: string, order: number): Layer {
-        const layer = new Layer(name, order);
+        // TODO generate id
+        const layer = new Layer('', name, order);
         this.addLayer(layer);
 
         return layer;

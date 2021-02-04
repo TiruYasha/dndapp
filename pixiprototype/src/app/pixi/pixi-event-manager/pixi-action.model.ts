@@ -1,5 +1,5 @@
 import { Subject } from 'rxjs';
-import { PixiEventName } from './pixi-events.model';
+import { PixiEventName } from './pixi-events.enum';
 
 export interface PixiAction {
     event: PixiEventName;

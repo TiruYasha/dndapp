@@ -1,6 +1,6 @@
 export enum PixiEventName {
     LayerSwitched,
 
-    ObjectSelected,
+    ObjectClicked,
     ObjectMoved
 }

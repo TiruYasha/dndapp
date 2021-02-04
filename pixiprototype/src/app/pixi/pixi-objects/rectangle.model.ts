@@ -5,7 +5,7 @@ import { ShapePixiObject } from './shape.model';
 export class Rectangle extends ShapePixiObject {
     rectangle: Graphics;
 
-    constructor(options: RectangleOptions) {
+    constructor(id: string, options: RectangleOptions) {
         const rectangle = new Graphics();
 
         if (options.fillColor) {
@@ -21,7 +21,7 @@ export class Rectangle extends ShapePixiObject {
         rectangle.pivot.x = options.width / 2;
         rectangle.pivot.y = options.height / 2;
 
-        super(rectangle, options);
+        super(id, rectangle, options);
 
         this.rectangle = rectangle;
     }
@@ -46,4 +46,3 @@ export class FillColor {
     colorInHex: number;
     alpha?: number;
 }
-

@@ -1,16 +1,16 @@
 import { Container } from 'pixi.js';
 import { Subject } from 'rxjs';
 import { triggerAction } from '../pixi-event-manager/pixi-action-manager';
-import { PixiEventName } from '../pixi-event-manager/pixi-events.model';
-import { ObjectSelected } from '../pixi-event-manager/select-action.model';
+import { PixiEventName } from '../pixi-event-manager/pixi-events.enum';
+import { ObjectSelected } from '../pixi-events/object-selected.model';
 import { BaseOptions, BasePixiObject } from './base-pixi-object.model';
 import { PixiObjectType } from './pixi-object.type';
 
 export abstract class ClickableObject extends BasePixiObject {
     destroyObjectSelected$ = new Subject();
 
-    constructor(object: Container, options: BaseOptions) {
-        super(object, options);
+    constructor(id: string, object: Container, options: BaseOptions) {
+        super(id, object, options);
 
         this.type.push(PixiObjectType.Clickable);
     }
@@ -28,7 +28,7 @@ export abstract class ClickableObject extends BasePixiObject {
     }
 
     private onDragStart(): void {
-        triggerAction<ObjectSelected>(PixiEventName.ObjectSelected, {
+        triggerAction<ObjectSelected>(PixiEventName.ObjectClicked, {
             object: this
         });
     }

@@ -8,7 +8,7 @@ export class Layer {
     private _container: Container;
     private _pixiObjects: BasePixiObject[] = [];
 
-    constructor(public name: string, public order: number) {
+    constructor(public readonly id: string, public name: string, public order: number) {
         this._container = new Container();
         this._container.name = name;
         this._container.zIndex = order;

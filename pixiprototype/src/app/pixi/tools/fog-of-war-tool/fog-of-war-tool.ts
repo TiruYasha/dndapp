@@ -32,7 +32,8 @@ export class FogOfWarTool extends Tool {
 
     fillMap(): void {
         this.disableRectangleReveal();
-        this.layer = new Layer(this.layerName, 99999);
+        //TODO id stuff
+        this.layer = new Layer('', this.layerName, 99999);
         this.layer.container.filters = [new filters.AlphaFilter()];
         this.playground.addLayer(this.layer);
 

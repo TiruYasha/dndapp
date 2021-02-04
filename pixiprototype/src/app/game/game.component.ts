@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { GameService } from '../_services/game.service';
+import { GameHub } from '../_hubs/game.hub';
 
 @Component({
   selector: 'trpg-game',

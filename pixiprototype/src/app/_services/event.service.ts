@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { listenToAction, triggerAction } from '../pixi/pixi-event-manager/pixi-action-manager';
 import { PixiEvent } from '../pixi/pixi-event-manager/pixi-action.model';
-import { PixiEventName } from '../pixi/pixi-event-manager/pixi-events.model';
+import { PixiEventName } from '../pixi/pixi-event-manager/pixi-events.enum';
 
 @Injectable({
     providedIn: 'root'

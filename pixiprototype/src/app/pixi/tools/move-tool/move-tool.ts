@@ -1,7 +1,7 @@
 import { Container, Graphics, InteractionEvent } from 'pixi.js';
 import { Subject, Subscription } from 'rxjs';
-import { listenToAction } from '../../pixi-event-manager/pixi-action-manager';
-import { ObjectSelected } from '../../pixi-event-manager/select-action.model';
+import { listenToAction, triggerAction } from '../../pixi-event-manager/pixi-action-manager';
+import { ObjectSelected } from '../../pixi-events/object-selected.model';
 import { BasePixiObject } from '../../pixi-objects/base-pixi-object.model';
 import { Playground } from '../../pixi-structure/playground.model';
 import { Tool } from '../tool.model';
@@ -14,7 +14,8 @@ import { createContainer, createRectangle } from './move-tool-object-creator';
 import { MultiSelectorTool } from './multi-selector-tool';
 import { takeUntil } from 'rxjs/operators';
 import { Layer } from '../../pixi-structure/layer.model';
-import { PixiEventName } from '../../pixi-event-manager/pixi-events.model';
+import { PixiEventName } from '../../pixi-event-manager/pixi-events.enum';
+import { ObjectMoved } from '../../pixi-events/object-moved.model';
 
 export class MoveTool extends Tool {
     private destroySubject = new Subject();
@@ -45,7 +46,7 @@ export class MoveTool extends Tool {
             .pipe(takeUntil(this.destroySubject))
             .subscribe((newActiveLayer) => this.newActiveLayerEnabled(newActiveLayer.content));
 
-        listenToAction<ObjectSelected>(PixiEventName.ObjectSelected)
+        listenToAction<ObjectSelected>(PixiEventName.ObjectClicked)
             .pipe(takeUntil(this.destroySubject))
             .subscribe(o => {
                 this.childSelectedObject = o.content.object;
@@ -95,6 +96,12 @@ export class MoveTool extends Tool {
 
     private onDragEnd(): void {
         this.dragging = false;
+        triggerAction<ObjectMoved>(PixiEventName.ObjectMoved, {
+            objectId: this.childSelectedObject.id,
+            newX: this.childSelectedObject.displayObject.x,
+            newY: this.childSelectedObject.displayObject.y,
+            layerId: this.activeLayer.id
+        });
     }
 
     private onDragMove(event: InteractionEvent): void {

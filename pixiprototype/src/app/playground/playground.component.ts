@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { GameService } from '../_services/game.service';
+import { GameHub } from '../_hubs/game.hub';
 import { PlaygroundService } from '../_services/playground.service';
 
 @Component({
@@ -12,7 +12,7 @@ export class PlaygroundComponent implements OnInit {
   playgroundCanvas: ElementRef;
 
   playGroundLoaded = false;
-  constructor(private playgroundService: PlaygroundService, private gameService: GameService) { }
+  constructor(private playgroundService: PlaygroundService) { }
 
   ngOnInit(): void {
     this.playgroundService.loadPlayground()

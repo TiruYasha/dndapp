@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Hub } from '../_helpers/hub';
 import { MoveObjectCommand } from '../_models/hub/commands/move-object.model';
-import { HubService } from './hub.service';
+import { HubService } from '../_services/hub.service';
 
 @Injectable({
     providedIn: 'root'
 })
-export class GameService {
+export class GameHub {
     hub: Hub;
 
     constructor(private hubService: HubService) {

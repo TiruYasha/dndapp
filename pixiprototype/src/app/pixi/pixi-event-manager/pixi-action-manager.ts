@@ -1,6 +1,6 @@
 import { Observable, ReplaySubject, Subject } from 'rxjs';
 import { PixiAction, PixiEvent } from './pixi-action.model';
-import { PixiEventName } from './pixi-events.model';
+import { PixiEventName } from './pixi-events.enum';
 
 const actions: PixiAction[] = [];
 
@@ -26,9 +26,9 @@ export function triggerAction<T>(event: PixiEventName, content: T, replayable = 
         content,
         event
     };
+    allEventsSubject.next(pixiEvent);
     if (action) {
         action.subject.next(pixiEvent);
-        allEventsSubject.next(pixiEvent);
     } else if (replayable) {
         const newAction: PixiAction = {
             event,
@@ -36,7 +36,6 @@ export function triggerAction<T>(event: PixiEventName, content: T, replayable = 
         };
         actions.push(newAction);
         newAction.subject.next(pixiEvent);
-        allEventsSubject.next(pixiEvent);
     }
 }
 

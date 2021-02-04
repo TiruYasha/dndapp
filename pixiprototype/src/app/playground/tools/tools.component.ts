@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ToolType } from 'src/app/pixi/tools/tool.type';
-import { PlaygroundService } from 'src/app/_services/playground.service';
 import { ToolService } from 'src/app/_services/tool.service';
 
 @Component({

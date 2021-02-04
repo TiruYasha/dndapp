@@ -11,6 +11,7 @@ import { Layer } from '../pixi/pixi-structure/layer.model';
 import { Playground } from '../pixi/pixi-structure/playground.model';
 import { Tool } from '../pixi/tools/tool.model';
 import { ToolType } from '../pixi/tools/tool.type';
+import { GameHub } from '../_hubs/game.hub';
 import { CanvasObject } from '../_models/playground/canvas-objects/canvas-object.model';
 import { CanvasObjectType } from '../_models/playground/canvas-objects/canvas-object.type';
 import { RectangleModel } from '../_models/playground/canvas-objects/rectangle.model';
@@ -26,7 +27,7 @@ export class PlaygroundService {
 
     _playground$: Observable<Playground>;
 
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient, private gameHub: GameHub) {
         this.playgroundSubject = new ReplaySubject<Playground>(1);
         this._playground$ = this.playgroundSubject.asObservable();
     }
@@ -58,7 +59,7 @@ export class PlaygroundService {
 
     private addLayers(p: PlaygroundModel): void {
         p.layers.forEach(l => {
-            const layer = new Layer(l.name, l.order);
+            const layer = new Layer(l.id, l.name, l.order);
             this._playground.addLayer(layer);
             this.addCanvasObjectsToLayer(layer, l.canvasObjects);
         });
@@ -75,7 +76,7 @@ export class PlaygroundService {
     }
 
     private createRectangle(r: RectangleModel): BasePixiObject {
-        const rectangle = new Rectangle({
+        const rectangle = new Rectangle(r.id, {
             height: r.height,
             width: r.width,
             x: r.x,

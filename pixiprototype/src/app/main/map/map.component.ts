@@ -9,7 +9,7 @@ import { CanvasObject } from 'src/app/_models/playground/canvas-objects/canvas-o
 import { CanvasObjectType } from 'src/app/_models/playground/canvas-objects/canvas-object.type';
 import { RectangleModel } from 'src/app/_models/playground/canvas-objects/rectangle.model';
 import { PlaygroundModel } from 'src/app/_models/playground/playground.model';
-import { GameService } from 'src/app/_services/game.service';
+import { GameHub } from 'src/app/_hubs/game.hub';
 
 @Component({
   selector: 'trpg-map',
@@ -24,7 +24,7 @@ export class MapComponent implements OnInit {
   playgroundIntern: Playground;
   app: Application;
 
-  constructor(private gameService: GameService) { }
+  constructor(private gameService: GameHub) { }
 
   ngOnInit(): void {
     this.app = new Application({ width: 700, height: 600, backgroundColor: 0xffffff });
@@ -39,7 +39,7 @@ export class MapComponent implements OnInit {
 
   private addLayers(): void {
     this.playground.layers.forEach(l => {
-      const layer = new Layer(l.name, l.order);
+      const layer = new Layer(l.id, l.name, l.order);
       this.playgroundIntern.addLayer(layer);
       this.addCanvasObjectsToLayer(layer, l.canvasObjects);
     });
@@ -56,7 +56,7 @@ export class MapComponent implements OnInit {
     });
   }
   createRectangle(r: RectangleModel): BasePixiObject {
-    const rectangle = new Rectangle({
+    const rectangle = new Rectangle(r.id, {
       height: r.height,
       width: r.width,
       x: r.x,

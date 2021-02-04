@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ObjectService } from './object.service';
+import { ObjectHub } from './object.hub';
 
 describe('ObjectService', () => {
-  let service: ObjectService;
+  let service: ObjectHub;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(ObjectService);
+    service = TestBed.inject(ObjectHub);
   });
 
   it('should be created', () => {
