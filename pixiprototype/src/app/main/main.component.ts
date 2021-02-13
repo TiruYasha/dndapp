@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { PlaygroundModel } from '../_models/playground/playground.model';
-import { PlaygroundService } from '../_services/playground.service';
 
 @Component({
   selector: 'trpg-main',
@@ -13,7 +12,7 @@ export class MainComponent implements OnInit {
   title = 'pixiprototype';
   playground$: Observable<PlaygroundModel>;
 
-  constructor(private playgroundService: PlaygroundService) {
+  constructor() {
 
   }
 

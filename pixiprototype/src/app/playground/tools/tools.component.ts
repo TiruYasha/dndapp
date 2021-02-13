@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ToolType } from 'src/app/pixi/tools/tool.type';
-import { ToolService } from 'src/app/_services/tool.service';
+import { ToolService } from 'src/app/_services/game/tool.service';
 
 @Component({
   selector: 'trpg-tools',

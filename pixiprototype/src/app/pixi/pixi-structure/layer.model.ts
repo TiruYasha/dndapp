@@ -4,7 +4,6 @@ import { ClickableObject } from '../pixi-objects/clickable-pixi-object.model';
 import { PixiObjectType } from '../pixi-objects/pixi-object.type';
 
 export class Layer {
-
     private _container: Container;
     private _pixiObjects: BasePixiObject[] = [];
 
@@ -12,15 +11,6 @@ export class Layer {
         this._container = new Container();
         this._container.name = name;
         this._container.zIndex = order;
-    }
-
-    addObject(pixiObject: BasePixiObject): void {
-        this._pixiObjects.push(pixiObject);
-        this._container.addChild(pixiObject.displayObject);
-    }
-
-    makeInteractable(): void {
-        this._container.interactive = true;
     }
 
     get pixiObjects(): BasePixiObject[] { return this._pixiObjects; }
@@ -32,5 +22,22 @@ export class Layer {
 
     get container(): Container {
         return this._container;
+    }
+
+    addObject(pixiObject: BasePixiObject): void {
+        this._pixiObjects.push(pixiObject);
+        this._container.addChild(pixiObject.displayObject);
+    }
+
+    makeInteractable(): void {
+        this._container.interactive = true;
+    }
+
+    moveObject(objectId: string, newX: number, newY: number): void {
+        const objectToMove = this.pixiObjects.filter(p => p.id === objectId)[0];
+
+        if (!objectToMove) { return; }
+
+        objectToMove.move(newX, newY);
     }
 }

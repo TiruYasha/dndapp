@@ -65,8 +65,8 @@ export class Playground {
         this.layersChanged();
     }
 
-    getLayer(name: string): Layer {
-        return this._layers.filter(l => l.name === name)[0];
+    getLayer(nameOrId: string): Layer {
+        return this._layers.filter(l => l.name === nameOrId || l.id === nameOrId)[0];
     }
 
     // setActiveTool(toolType: ToolType): Tool {

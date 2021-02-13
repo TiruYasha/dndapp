@@ -8,6 +8,11 @@ export abstract class BasePixiObject {
         this.displayObject.x = options.x;
         this.displayObject.y = options.y;
     }
+
+    move(newX, newY): void {
+        this.displayObject.x = newX;
+        this.displayObject.y = newY;
+    }
 }
 
 export class BaseOptions {

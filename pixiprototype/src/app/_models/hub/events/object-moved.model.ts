@@ -1,4 +1,4 @@
-export interface MoveObjectCommand {
+export interface ObjectMoved {
     objectId: string;
     layerId: string;
     newX: number;

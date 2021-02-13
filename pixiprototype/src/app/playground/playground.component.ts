@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { GameHub } from '../_hubs/game.hub';
-import { PlaygroundService } from '../_services/playground.service';
+import { ObjectHub } from '../_hubs/object/object.hub';
+import { PlaygroundService } from '../_services/game/playground.service';
 
 @Component({
   selector: 'trpg-playground',
@@ -12,7 +12,9 @@ export class PlaygroundComponent implements OnInit {
   playgroundCanvas: ElementRef;
 
   playGroundLoaded = false;
-  constructor(private playgroundService: PlaygroundService) { }
+  constructor(
+    private playgroundService: PlaygroundService,
+    private objectHub: ObjectHub) { }
 
   ngOnInit(): void {
     this.playgroundService.loadPlayground()
@@ -21,6 +23,8 @@ export class PlaygroundComponent implements OnInit {
         div.appendChild(a.app.view);
         this.playGroundLoaded = true;
         a.setActiveLayerByName('Layer 2');
+
+        this.objectHub.startListening();
       });
   }
 }

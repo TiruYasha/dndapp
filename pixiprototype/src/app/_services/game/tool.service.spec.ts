@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 import { PlaygroundService } from './playground.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { ToolFactory } from '../pixi/tools/tool-factory.model';
-import { ToolType } from '../pixi/tools/tool.type';
 import { ToolService } from './tool.service';
 
 import { instance, mock, verify, when } from 'ts-mockito';
-import { Playground } from '../pixi/pixi-structure/playground.model';
-import { MoveTool } from '../pixi/tools/move-tool/move-tool';
+import { Playground } from 'src/app/pixi/pixi-structure/playground.model';
+import { MoveTool } from 'src/app/pixi/tools/move-tool/move-tool';
+import { ToolFactory } from 'src/app/pixi/tools/tool-factory.model';
+import { ToolType } from 'src/app/pixi/tools/tool.type';
 
 describe('ToolService', () => {
   let toolService: ToolService;

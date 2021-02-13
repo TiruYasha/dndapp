@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { allEvents$ } from 'src/app/pixi/pixi-event-manager/pixi-action-manager';
 import { PixiEvent } from 'src/app/pixi/pixi-event-manager/pixi-action.model';
 import { PixiEventName } from 'src/app/pixi/pixi-event-manager/pixi-events.enum';
-import { EventService } from 'src/app/_services/event.service';
+import { EventService } from 'src/app/_services/game/event.service';
 
 @Component({
   selector: 'trpg-event-logger',

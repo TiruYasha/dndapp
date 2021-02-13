@@ -1,28 +1,25 @@
 import { Injectable } from '@angular/core';
+import { ReplaySubject } from 'rxjs';
 import { Hub } from '../_helpers/hub';
-import { MoveObjectCommand } from '../_models/hub/commands/move-object.model';
 import { HubService } from '../_services/hub.service';
+import { ObjectHub } from './object/object.hub';
 
 @Injectable({
     providedIn: 'root'
 })
 export class GameHub {
-    hub: Hub;
+    private hub: Hub;
+    private hubSubject = new ReplaySubject<Hub>(1);
 
-    constructor(private hubService: HubService) {
-        this.hub = hubService.buildConnection('game');
-        this.hub.start()
-            .then(t => {
-                this.moveObject();
-            });
+    hub$ = this.hubSubject.asObservable();
+
+    constructor(
+        private hubService: HubService) {
     }
 
-    moveObject(): void {
-        const moveObject: MoveObjectCommand = {
-            newX: 10,
-            newY: 30,
-            objectId: '765c8568-d448-4bf2-b3ff-678d440c86c4'
-        };
-        this.hub.send('MoveObject', moveObject);
+    start(): void {
+        this.hub = this.hubService.buildConnection('game');
+        this.hub.start()
+            .then(c => this.hubSubject.next(this.hub));
     }
 }

@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace GamePart.Api.Models.HubCommands
 {
-    public class MoveObjectCommand
+    public class MoveObject
     {
         public Guid ObjectId { get; set; }
+        public Guid LayerId { get; set; }
         public int NewX { get; set; }
         public int NewY { get; set; }
     }

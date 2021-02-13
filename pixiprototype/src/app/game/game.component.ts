@@ -8,9 +8,10 @@ import { GameHub } from '../_hubs/game.hub';
 })
 export class GameComponent implements OnInit {
 
-  constructor() { }
+  constructor(private gameHub: GameHub) { }
 
   ngOnInit(): void {
+    this.gameHub.start();
   }
 
 }

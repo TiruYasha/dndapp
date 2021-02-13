@@ -1,21 +1,18 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Application } from 'pixi.js';
-import { AttachSession } from 'protractor/built/driverProviders';
 import { Observable, ReplaySubject } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
+import { BasePixiObject } from 'src/app/pixi/pixi-objects/base-pixi-object.model';
+import { Rectangle } from 'src/app/pixi/pixi-objects/rectangle.model';
+import { Layer } from 'src/app/pixi/pixi-structure/layer.model';
+import { Playground } from 'src/app/pixi/pixi-structure/playground.model';
+import { ObjectHub } from 'src/app/_hubs/object/object.hub';
+import { CanvasObject } from 'src/app/_models/playground/canvas-objects/canvas-object.model';
+import { CanvasObjectType } from 'src/app/_models/playground/canvas-objects/canvas-object.type';
+import { RectangleModel } from 'src/app/_models/playground/canvas-objects/rectangle.model';
+import { PlaygroundModel } from 'src/app/_models/playground/playground.model';
 import { environment } from 'src/environments/environment';
-import { BasePixiObject } from '../pixi/pixi-objects/base-pixi-object.model';
-import { Rectangle } from '../pixi/pixi-objects/rectangle.model';
-import { Layer } from '../pixi/pixi-structure/layer.model';
-import { Playground } from '../pixi/pixi-structure/playground.model';
-import { Tool } from '../pixi/tools/tool.model';
-import { ToolType } from '../pixi/tools/tool.type';
-import { GameHub } from '../_hubs/game.hub';
-import { CanvasObject } from '../_models/playground/canvas-objects/canvas-object.model';
-import { CanvasObjectType } from '../_models/playground/canvas-objects/canvas-object.type';
-import { RectangleModel } from '../_models/playground/canvas-objects/rectangle.model';
-import { PlaygroundModel } from '../_models/playground/playground.model';
 
 @Injectable({
     providedIn: 'root'
@@ -27,7 +24,8 @@ export class PlaygroundService {
 
     _playground$: Observable<Playground>;
 
-    constructor(private http: HttpClient, private gameHub: GameHub) {
+    constructor(
+        private http: HttpClient) {
         this.playgroundSubject = new ReplaySubject<Playground>(1);
         this._playground$ = this.playgroundSubject.asObservable();
     }
