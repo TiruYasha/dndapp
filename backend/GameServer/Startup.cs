@@ -53,7 +53,7 @@ namespace GameServer
 
                 options.AddPolicy("signalr", builder =>
                 {
-                    builder.WithOrigins("http://localhost:4200")
+                    builder.WithOrigins("http://localhost:4200", "http://174.138.4.246:5001")
                         .AllowAnyHeader()
                         .AllowAnyMethod()
                         .AllowCredentials();
