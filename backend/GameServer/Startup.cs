@@ -41,16 +41,7 @@ namespace GameServer
             services.AddEntityFrameworkNpgsql().AddDbContext<GameContext>
                 (options => options.UseNpgsql(connection));
 
-            services.AddCors(options =>
-            {
-                options.AddPolicy("signalr", builder =>
-                {
-                    builder.WithOrigins("http://localhost:4200", "http://174.138.4.246:5001")
-                        .AllowAnyHeader()
-                        .AllowAnyMethod()
-                        .AllowCredentials();
-                });
-            });
+            services.AddCors();
 
             var gameAssembly = typeof(PlaygroundController).Assembly;
 
@@ -120,7 +111,13 @@ namespace GameServer
                 c.RoutePrefix = string.Empty;
             });
 
-            app.UseCors("signalr");
+            app.UseCors(builder =>
+            {
+                builder.WithOrigins("http://localhost:4200", "http://174.138.4.246:5001", "http://174.138.4.246:5002")
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowCredentials();
+            });
             app.UseRouting();
             app.UseAuthorization();
 
