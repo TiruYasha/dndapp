@@ -43,14 +43,6 @@ namespace GameServer
 
             services.AddCors(options =>
             {
-                options.AddDefaultPolicy(builder =>
-                {
-                    builder.AllowAnyOrigin();
-                    builder.AllowAnyMethod();
-                    builder.AllowAnyHeader();
-                    builder.AllowAnyOrigin();
-                });
-
                 options.AddPolicy("signalr", builder =>
                 {
                     builder.WithOrigins("http://localhost:4200", "http://174.138.4.246:5001")
