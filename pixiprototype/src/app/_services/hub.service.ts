@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import * as signalR from '@microsoft/signalr';
 import { HubConnectionBuilder } from '@microsoft/signalr';
 import { environment } from 'src/environments/environment';
 import { Hub } from '../_helpers/hub';
@@ -14,6 +15,7 @@ export class HubService {
   buildConnection(hubName: string): Hub {
     const hubConnection = new HubConnectionBuilder()
       .withUrl(`${environment.gameApi}hub/${hubName}?access_token=${this.getAccessToken()}`)
+      .configureLogging(signalR.LogLevel.Information)
       .build();
 
     return new Hub(hubConnection);

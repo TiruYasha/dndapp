@@ -84,6 +84,17 @@ namespace GameServer
                 };
             });
 
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(builder =>
+                {
+                    builder.WithOrigins("http://174.138.4.246:5001", "http://174.138.4.246:5002", "http://localhost:4200")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .AllowCredentials();
+                });
+            });
+
             services.AddSignalR();
             services.AddControllers()
                 .AddApplicationPart(gameAssembly)
@@ -111,16 +122,16 @@ namespace GameServer
                 c.RoutePrefix = string.Empty;
             });
 
-            app.UseCors(builder =>
-            {
-                builder.WithOrigins("http://localhost:4200", "http://174.138.4.246:5001", "http://174.138.4.246:5002")
-                .AllowAnyHeader()
-                .AllowAnyMethod()
-                .AllowCredentials();
-            });
+            //builder =>
+            //{
+            //    builder.WithOrigins("http://174.138.4.246:5001", "http://174.138.4.246:5002", "http://localhost:4200")
+            //    .AllowAnyHeader()
+            //    .AllowAnyMethod()
+            //    .AllowCredentials();
+            //})
+            app.UseCors();
             app.UseRouting();
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
