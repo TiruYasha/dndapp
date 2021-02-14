@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable, ReplaySubject } from 'rxjs';
-import { ToolFactory } from 'src/app/pixi/tools/tool-factory.model';
-import { Tool } from 'src/app/pixi/tools/tool.model';
-import { ToolType } from 'src/app/pixi/tools/tool.type';
+import { ToolFactory } from 'src/app/game/pixi/tools/tool-factory.model';
+import { Tool } from 'src/app/game/pixi/tools/tool.model';
+import { ToolType } from 'src/app/game/pixi/tools/tool.type';
 import { PlaygroundService } from './playground.service';
 
 @Injectable({

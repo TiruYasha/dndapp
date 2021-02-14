@@ -5,7 +5,6 @@
 export const environment = {
   production: false,
   gameApi: 'https://localhost:5003/'
-  //http://174.138.4.246:5002
 };
 
 /*

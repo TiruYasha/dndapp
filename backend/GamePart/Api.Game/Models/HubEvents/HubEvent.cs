@@ -6,8 +6,5 @@ using System.Threading.Tasks;
 
 namespace GamePart.Api.Models.HubEvents
 {
-    public class HubEvent<T>
-    {
-        public T Data { get; set; }
-    }
+    public record HubEvent<T>(T Data);
 }

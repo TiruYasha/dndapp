@@ -1,5 +1,5 @@
 import { HubConnection } from '@microsoft/signalr';
-import { HubCommand, HubMethod } from '../_models/hub/method.model';
+import { HubCommand, HubMethod } from '../game/playground/_hub-models/method.model';
 
 export class Hub {
 

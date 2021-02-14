@@ -1,9 +1,11 @@
 ﻿using Api.Game.Models;
+using GamePart.Api.Models;
 using GamePart.Api.Readers;
 using GamePart.Domain.CanvasObjects;
 using GamePart.Repository;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -37,6 +39,15 @@ namespace GamePart.Read
             };
 
             return mappedPlayground;
+        }
+
+        public async Task<List<PlaygroundListItem>> GetPlaygroundsForGame(Guid gameId)
+        {
+            var playgrounds = await _context.Playgrounds.Where(p => p.GameId == gameId)
+                .Select(p => new PlaygroundListItem(p.Id, p.Name, p.IsPlayerView))
+                .ToListAsync();
+
+            return playgrounds;
         }
 
         private CanvasObjectModel MapCanvasObject(CanvasObject c)

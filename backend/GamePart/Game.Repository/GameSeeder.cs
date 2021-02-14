@@ -1,10 +1,8 @@
 ﻿using GamePart.Domain;
 using GamePart.Domain.CanvasObjects;
-using Microsoft.EntityFrameworkCore.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace GamePart.Repository
 {
@@ -44,28 +42,33 @@ namespace GamePart.Repository
 
             var playground = new Playground
             {
-                Id = new Guid("a97fd84a-12a9-4b37-87c3-4c9b72096a1e"),
-                Name = "testplayground"
+                Id = Guid.NewGuid(),
+                Name = "playground",
+                IsPlayerView = true
+            };
+
+            var playground2 = new Playground
+            {
+                Id = Guid.NewGuid(),
+                Name = "playground 2"
             };
 
             AddLayer1(playground);
             AddLayer2(playground);
 
-            game.Playgrounds.Add(playground);
+            AddLayer1(playground2);
+            AddLayer2(playground2);
 
-            try
-            {
-                _context.Add(game);
-                _context.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                ;
-            }
+            game.Playgrounds.Add(playground);
+            game.Playgrounds.Add(playground2);
+
+            _context.Add(game);
+            _context.SaveChangesAsync();
         }
 
         private static void AddLayer1(Playground playground)
         {
+            Random rnd = new Random();
             var layer1 = new Layer
             {
                 Name = "Layer 1",
@@ -76,17 +79,17 @@ namespace GamePart.Repository
 
             var rect1 = new Rectangle
             {
-                Id = new Guid("2cafabfe-a8a9-4e17-bde3-b9a1a0a4c727"),
+                Id = Guid.NewGuid(),
                 Width = 80,
                 Height = 80,
                 ColorInHex = 0xFF3300,
-                X = 170,
-                Y = 170
+                X = rnd.Next(1, 500),
+                Y = rnd.Next(1, 500)
             };
 
             var rect2 = new Rectangle
             {
-                Id = new Guid("76136cdd-88bc-4aec-97dd-8fc650e58095"),
+                Id = Guid.NewGuid(),
                 Width = 80,
                 Height = 80,
                 ColorInHex = 0xFF3300,
@@ -100,6 +103,7 @@ namespace GamePart.Repository
 
         private static void AddLayer2(Playground map)
         {
+            Random rnd = new Random();
             var layer2 = new Layer
             {
                 Name = "Layer 2",
@@ -110,22 +114,22 @@ namespace GamePart.Repository
 
             var rect1 = new Rectangle
             {
-                Id = new Guid("ae6ea233-b1dd-4def-8bdb-861b4658bc75"),
+                Id = Guid.NewGuid(),
                 Width = 80,
                 Height = 80,
                 ColorInHex = 0x1c9dff,
-                X = 170,
-                Y = 170
+                X = rnd.Next(1, 500),
+                Y = rnd.Next(1, 500)
             };
 
             var rect2 = new Rectangle
             {
-                Id = new Guid("efb9de7c-864a-4d87-a72e-a999ac84d29d"),
+                Id = Guid.NewGuid(),
                 Width = 80,
                 Height = 80,
                 ColorInHex = 0x1c9dff,
-                X = 270,
-                Y = 370
+                X = rnd.Next(1, 500),
+                Y = rnd.Next(1, 500)
             };
 
             layer2.CanvasObjects.Add(rect1);

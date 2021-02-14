@@ -1,7 +1,7 @@
 import { Container, Graphics, InteractionEvent } from 'pixi.js';
-import { ShapePixiObject } from 'src/app/pixi/pixi-objects/shape.model';
-import { Playground } from 'src/app/pixi/pixi-structure/playground.model';
 import { Rectangle } from '../../pixi-objects/rectangle.model';
+import { ShapePixiObject } from '../../pixi-objects/shape.model';
+import { Playground } from '../../pixi-structure/playground.model';
 import { Tool } from '../tool.model';
 import { ToolType } from '../tool.type';
 import { DrawShapeToolOptions, DrawShapeType } from './draw-shape-options.model';

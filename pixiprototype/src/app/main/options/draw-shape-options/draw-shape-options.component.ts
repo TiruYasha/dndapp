@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { DrawShapeTool } from 'src/app/pixi/tools/draw-shape-tool/draw-shape-tool.model';
+import { DrawShapeTool } from 'src/app/game/pixi/tools/draw-shape-tool/draw-shape-tool.model';
 
 @Component({
   selector: 'trpg-draw-shape-options',

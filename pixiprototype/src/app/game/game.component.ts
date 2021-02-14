@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { GameHub } from '../_hubs/game.hub';
+import { GameHub } from './_hubs/game.hub';
 
 @Component({
   selector: 'trpg-game',
@@ -13,5 +13,4 @@ export class GameComponent implements OnInit {
   ngOnInit(): void {
     this.gameHub.start();
   }
-
 }

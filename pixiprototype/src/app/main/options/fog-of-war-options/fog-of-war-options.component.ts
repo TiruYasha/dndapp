@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, Output } from '@angular/core';
-import { FogOfWarTool } from 'src/app/pixi/tools/fog-of-war-tool/fog-of-war-tool';
+import { FogOfWarTool } from 'src/app/game/pixi/tools/fog-of-war-tool/fog-of-war-tool';
 
 @Component({
   selector: 'trpg-fog-of-war-options',

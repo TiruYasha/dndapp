@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { PlaygroundModel } from '../_models/playground/playground.model';
+import { PlaygroundModel } from '../game/playground/_models/playground.model';
 
 @Component({
   selector: 'trpg-main',

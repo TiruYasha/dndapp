@@ -2,16 +2,15 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Application } from 'pixi.js';
 import { Observable, ReplaySubject } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
-import { BasePixiObject } from 'src/app/pixi/pixi-objects/base-pixi-object.model';
-import { Rectangle } from 'src/app/pixi/pixi-objects/rectangle.model';
-import { Layer } from 'src/app/pixi/pixi-structure/layer.model';
-import { Playground } from 'src/app/pixi/pixi-structure/playground.model';
-import { ObjectHub } from 'src/app/_hubs/object/object.hub';
-import { CanvasObject } from 'src/app/_models/playground/canvas-objects/canvas-object.model';
-import { CanvasObjectType } from 'src/app/_models/playground/canvas-objects/canvas-object.type';
-import { RectangleModel } from 'src/app/_models/playground/canvas-objects/rectangle.model';
-import { PlaygroundModel } from 'src/app/_models/playground/playground.model';
+import { map } from 'rxjs/operators';
+import { BasePixiObject } from 'src/app/game/pixi/pixi-objects/base-pixi-object.model';
+import { Rectangle } from 'src/app/game/pixi/pixi-objects/rectangle.model';
+import { Layer } from 'src/app/game/pixi/pixi-structure/layer.model';
+import { Playground } from 'src/app/game/pixi/pixi-structure/playground.model';
+import { CanvasObject } from 'src/app/game/playground/_models/canvas-objects/canvas-object.model';
+import { CanvasObjectType } from 'src/app/game/playground/_models/canvas-objects/canvas-object.type';
+import { RectangleModel } from 'src/app/game/playground/_models/canvas-objects/rectangle.model';
+import { PlaygroundModel } from 'src/app/game/playground/_models/playground.model';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -54,6 +53,10 @@ export class PlaygroundService {
         }
         return this.playgroundSubject.asObservable();
     }
+
+    // getPlaygrounds(): Observable<> {
+
+    // }
 
     private addLayers(p: PlaygroundModel): void {
         p.layers.forEach(l => {

@@ -1,7 +1,7 @@
 import { fakeAsync, tick } from '@angular/core/testing';
 import { HubConnection } from '@microsoft/signalr';
 import { anything, instance, mock, verify, when } from 'ts-mockito';
-import { HubCommand } from '../_models/hub/method.model';
+import { HubCommand } from '../game/playground/_hub-models/method.model';
 import { Hub } from './hub';
 
 describe('Generic Hub', () => {
