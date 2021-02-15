@@ -1,6 +1,5 @@
 import { Layer } from './layer.model';
 import { Application, Graphics } from 'pixi.js';
-import { ToolType } from '../tools/tool.type';
 import { Tool } from '../tools/tool.model';
 import { ReplaySubject } from 'rxjs';
 import { triggerAction } from '../pixi-event-manager/pixi-action-manager';
@@ -91,6 +90,10 @@ export class Playground {
         this._activeLayer = layer;
         this.activeLayerSubject.next(this._activeLayer);
         triggerAction(PixiEventName.LayerSwitched, this._activeLayer, true);
+    }
+
+    dispose(): void {
+        this.app.destroy();
     }
 
     private layersChanged(): void {

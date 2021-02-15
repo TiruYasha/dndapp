@@ -19,7 +19,7 @@ namespace GamePart.Api.Utilities
 
         public Guid GetGameId()
         {
-            httpContextAccessor.HttpContext.Request.Headers.TryGetValue("GameId", out var gameId);
+            var gameId = httpContextAccessor?.HttpContext?.User?.Claims.FirstOrDefault(c => c.Type == "game")?.Value;
             return new Guid(gameId);
         }
 

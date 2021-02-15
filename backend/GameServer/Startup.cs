@@ -128,15 +128,10 @@ namespace GameServer
                 c.RoutePrefix = string.Empty;
             });
 
-            //builder =>
-            //{
-            //    builder.WithOrigins("http://174.138.4.246:5001", "http://174.138.4.246:5002", "http://localhost:4200")
-            //    .AllowAnyHeader()
-            //    .AllowAnyMethod()
-            //    .AllowCredentials();
-            //})
             app.UseCors();
             app.UseRouting();
+            app.UseAuthentication();
+
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {

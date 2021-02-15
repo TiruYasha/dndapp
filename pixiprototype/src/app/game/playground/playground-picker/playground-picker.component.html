@@ -1,1 +1,5 @@
-<p>playground-picker works!</p>
+<ul>
+    <li *ngFor="let playground of playgrounds" (click)="playgroundClicked(playground.id)">
+        {{playground.name}}
+    </li>
+</ul>

@@ -1,3 +1,4 @@
 <trpg-tools *ngIf="playGroundLoaded"></trpg-tools>
+<trpg-playground-picker [playgrounds]="playgrounds$ | async" (selectPlayground)="changePlayground($event)"></trpg-playground-picker>
 <div #playgroundCanvas></div>
 <trpg-event-logger></trpg-event-logger>
