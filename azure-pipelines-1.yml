@@ -80,5 +80,11 @@ stages:
                   contents: '**'
                   targetFolder: '/home/dndappdotnet/www'
                   readyTimeout: '20000'
+              - task: SSH@0
+                inputs:
+                  sshEndpoint: 'DigitalOceanDndApp'
+                  runOptions: 'commands'
+                  commands: 'sudo systemctl restart kestrel-dndapp.service'
+                  readyTimeout: '20000'
       
 
