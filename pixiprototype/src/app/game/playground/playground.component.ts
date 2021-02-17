@@ -17,7 +17,7 @@ export class PlaygroundComponent implements OnInit {
 
   private destroySubject = new Subject();
 
-  playgrounds$: Observable<PlaygroundListItem>;
+  playgrounds$: Observable<PlaygroundListItem[]>;
 
   playGroundLoaded = false;
   constructor(
@@ -30,8 +30,6 @@ export class PlaygroundComponent implements OnInit {
       .subscribe(a => {
         const div = this.playgroundCanvas.nativeElement as HTMLDivElement;
         if (this.playGroundLoaded === true) {
-          console.log('deleteOldPlayground');
-          console.log(this.playgroundCanvas.nativeElement);
           div.innerHTML = '';
         } else {
           this.objectHub.startListening();

@@ -12,6 +12,7 @@ import { CanvasObjectType } from 'src/app/game/playground/_models/canvas-objects
 import { RectangleModel } from 'src/app/game/playground/_models/canvas-objects/rectangle.model';
 import { PlaygroundModel } from 'src/app/game/playground/_models/playground.model';
 import { environment } from 'src/environments/environment';
+import { GameHub } from '../../_hubs/game.hub';
 import { PlaygroundListItem } from '../_models/playground-list-item.model';
 
 @Injectable({
@@ -24,7 +25,7 @@ export class PlaygroundService {
     private playgroundSubject: ReplaySubject<Playground>;
     private playgroundCache$: Observable<Playground>;
 
-    _playground$: Observable<Playground>;
+    private _playground$: Observable<Playground>;
 
     constructor(
         private http: HttpClient) {
@@ -42,18 +43,7 @@ export class PlaygroundService {
             .pipe(
                 takeUntil(this.destroySubject),
                 map(p => {
-                    if (this.playground) {
-                        this.playground.dispose();
-                    }
-                    
-                    const app = new Application({ width: 700, height: 600, backgroundColor: 0xffffff });
-                    app.stage.width = 700;
-                    app.stage.height = 600;
-
-                    this._playground = new Playground(app);
-                    this.addLayers(p);
-
-                    return this._playground;
+                    return this.mapPlayground(p);
                 }));
 
         this.playgroundCache$.subscribe(p => {
@@ -63,8 +53,23 @@ export class PlaygroundService {
         return this.playgroundSubject.asObservable();
     }
 
-    getPlaygrounds(): Observable<PlaygroundListItem> {
-        return this.http.get<PlaygroundListItem>(`${environment.gameApi}playground`);
+    getPlaygrounds(): Observable<PlaygroundListItem[]> {
+        return this.http.get<PlaygroundListItem[]>(`${environment.gameApi}playground`);
+    }
+
+    private mapPlayground(p: PlaygroundModel): Playground {
+        if (this.playground) {
+            this.playground.dispose();
+        }
+
+        const app = new Application({ width: 700, height: 600, backgroundColor: 0xffffff });
+        app.stage.width = 700;
+        app.stage.height = 600;
+
+        this._playground = new Playground(app);
+        this.addLayers(p);
+
+        return this._playground;
     }
 
     private addLayers(p: PlaygroundModel): void {
