@@ -1,10 +1,10 @@
 import { CanvasObjectType } from './canvas-object.type';
 
 export abstract class CanvasObject {
-    id: string;
+    id = '';
     type: CanvasObjectType;
-    x: number;
-    y: number;
+    x = 0;
+    y = 0;
 
     constructor(type: CanvasObjectType) {
         this.type = type;

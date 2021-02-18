@@ -1,4 +1,3 @@
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -13,7 +12,7 @@ import { PlaygroundListItem } from './_models/playground-list-item.model';
 })
 export class PlaygroundComponent implements OnInit {
   @ViewChild('playgroundCanvas')
-  playgroundCanvas: ElementRef;
+  playgroundCanvas!: ElementRef;
 
   private destroySubject = new Subject();
 
@@ -22,9 +21,7 @@ export class PlaygroundComponent implements OnInit {
   playGroundLoaded = false;
   constructor(
     private playgroundService: PlaygroundService,
-    private objectHub: ObjectHub) { }
-
-  ngOnInit(): void {
+    private objectHub: ObjectHub) {
     this.playgrounds$ = this.playgroundService.getPlaygrounds();
     this.playgroundService.playground$.pipe(takeUntil(this.destroySubject))
       .subscribe(a => {
@@ -39,6 +36,10 @@ export class PlaygroundComponent implements OnInit {
         this.playGroundLoaded = true;
         a.setActiveLayerByName('Layer 2');
       });
+  }
+
+  ngOnInit(): void {
+
   }
 
   changePlayground(playgroundId: string): void {

@@ -12,11 +12,9 @@ export class Playground {
     private activeToolSubject = new ReplaySubject<Tool>(1);
 
     private _layers: Layer[] = [];
-    private _backgroundLayer: Layer;
-    private _toolsLayer: Layer;
-    private _activeLayer: Layer;
-
-    private _activeTool: Tool;
+    private _backgroundLayer!: Layer;
+    private _toolsLayer!: Layer;
+    private _activeLayer!: Layer;
 
     layers$ = this.layersSubject.asObservable();
     activeLayer$ = this.activeLayerSubject.asObservable();

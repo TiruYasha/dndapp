@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { GameHub } from '../game.hub';
 import { HubCommand } from '../hub-commands';
-import { HubEvents } from '../hub-events';
 import { BaseHub } from '../base-hub';
 import { ObjectHubListener } from './object-hub-listener';
 import { listenToAction } from 'src/app/game/pixi/pixi-event-manager/pixi-action-manager';
@@ -11,12 +9,13 @@ import { PixiEventName } from 'src/app/game/pixi/pixi-event-manager/pixi-events.
 import { ObjectMoved } from 'src/app/game/playground/_hub-models/events/object-moved.model';
 import { Hub } from 'src/app/_helpers/hub';
 import { MoveObjectCommand } from 'src/app/game/playground/_hub-models/comands/move-object.model';
+import { PlaygroundService } from '../../playground/_services/playground.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ObjectHub extends BaseHub {
-  private hub: Hub;
+  private hub!: Hub;
 
   constructor(private gameHub: GameHub, private objectHubListener: ObjectHubListener) { super(); }
 
@@ -29,7 +28,6 @@ export class ObjectHub extends BaseHub {
         this.objectHubListener.listenToHubEvents(hub);
         this.listenToGameEvents();
       });
-
   }
 
   private listenToGameEvents(): void {

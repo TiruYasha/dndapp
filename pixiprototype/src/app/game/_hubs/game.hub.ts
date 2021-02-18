@@ -9,7 +9,7 @@ import { environment } from 'src/environments/environment';
     providedIn: 'root'
 })
 export class GameHub {
-    private hub: Hub;
+    private hub!: Hub;
     private hubSubject = new ReplaySubject<Hub>(1);
 
     hub$ = this.hubSubject.asObservable();
@@ -29,6 +29,8 @@ export class GameHub {
     }
 
     private getAccessToken(): string {
-        return localStorage.getItem('gameToken9a747b4b-5ce4-428b-8abe-af56ca738c84');
+        const token = localStorage.getItem('gameToken9a747b4b-5ce4-428b-8abe-af56ca738c84');
+
+        return token ? token : '';
     }
 }

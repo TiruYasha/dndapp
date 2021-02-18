@@ -5,11 +5,11 @@ import { ToolType } from '../tool.type';
 
 export class MultiSelectorTool extends Tool {
 
-    private dragging: boolean;
+    private dragging = false;
     private initialX = 0;
     private initialY = 0;
 
-    private selection: Graphics;
+    private selection!: Graphics;
 
     constructor(playground: Playground) {
         super(playground, ToolType.Selector);

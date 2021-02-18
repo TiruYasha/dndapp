@@ -19,7 +19,5 @@ export class ToolFactory {
             case ToolType.FogOfWar:
                 return new FogOfWarTool(playground);
         }
-
-        return null;
     }
 }

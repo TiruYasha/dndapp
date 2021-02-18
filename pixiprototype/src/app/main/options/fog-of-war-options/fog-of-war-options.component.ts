@@ -9,9 +9,10 @@ import { FogOfWarTool } from 'src/app/game/pixi/tools/fog-of-war-tool/fog-of-war
 export class FogOfWarOptionsComponent implements OnInit {
 
   @Input()
-  fogOfWar: FogOfWarTool;
+  fogOfWar!: FogOfWarTool;
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit(): void {
   }

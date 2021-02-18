@@ -1,5 +1,5 @@
 import { Container, Graphics, InteractionEvent } from 'pixi.js';
-import { Subject, Subscription } from 'rxjs';
+import { Subject } from 'rxjs';
 import { listenToAction, triggerAction } from '../../pixi-event-manager/pixi-action-manager';
 import { ObjectSelected } from '../../pixi-events/object-selected.model';
 import { BasePixiObject } from '../../pixi-objects/base-pixi-object.model';
@@ -19,16 +19,16 @@ import { ObjectMoved } from '../../pixi-events/object-moved.model';
 
 export class MoveTool extends Tool {
     private destroySubject = new Subject();
-    private activeLayer: Layer;
+    private activeLayer!: Layer;
 
-    private dragging: boolean;
-    private childSelectedObject: BasePixiObject;
-    private container: Container;
-    private rectangle: Graphics;
+    private dragging = false;
+    private childSelectedObject!: BasePixiObject;
+    private container!: Container;
+    private rectangle!: Graphics;
 
     private gizmos: Gizmo[] = [];
 
-    private multiSelectTool: MultiSelectorTool;
+    private multiSelectTool!: MultiSelectorTool;
 
     constructor(playground: Playground) {
         super(playground, ToolType.Selector);
@@ -179,7 +179,7 @@ export class MoveTool extends Tool {
         this.rectangle.on('pointerdown', () => this.onDragStart())
             .on('pointerup', () => this.onDragEnd())
             .on('pointerupoutside', () => this.onDragEnd())
-            .on('pointermove', (event) => this.onDragMove(event));
+            .on('pointermove', (event: InteractionEvent) => this.onDragMove(event));
         this.setupGizmos();
     }
 }

@@ -13,6 +13,7 @@ import { RectangleModel } from 'src/app/game/playground/_models/canvas-objects/r
 import { PlaygroundModel } from 'src/app/game/playground/_models/playground.model';
 import { environment } from 'src/environments/environment';
 import { GameHub } from '../../_hubs/game.hub';
+import { PlaygroundMapper } from '../playground-mapper/playground-mapper';
 import { PlaygroundListItem } from '../_models/playground-list-item.model';
 
 @Injectable({
@@ -20,15 +21,17 @@ import { PlaygroundListItem } from '../_models/playground-list-item.model';
 })
 export class PlaygroundService {
 
-    private _playground: Playground;
+    private _playground!: Playground;
     private destroySubject = new Subject();
     private playgroundSubject: ReplaySubject<Playground>;
-    private playgroundCache$: Observable<Playground>;
+    private playgroundCache$!: Observable<Playground>;
 
     private _playground$: Observable<Playground>;
 
     constructor(
-        private http: HttpClient) {
+        private http: HttpClient,
+        private playgroundMapper: PlaygroundMapper,
+        private gamehub: GameHub) {
         this.playgroundSubject = new ReplaySubject<Playground>(1);
         this._playground$ = this.playgroundSubject.asObservable();
     }
@@ -38,12 +41,13 @@ export class PlaygroundService {
     get playground(): Playground { return this._playground; }
 
     changePlayground(playgroundId: string): Observable<Playground> {
+        const test = this.gamehub.hub$;
         this.destroySubject.next();
         this.playgroundCache$ = this.http.get<PlaygroundModel>(`${environment.gameApi}playground/${playgroundId}`)
             .pipe(
                 takeUntil(this.destroySubject),
                 map(p => {
-                    return this.mapPlayground(p);
+                    return this.playgroundMapper.MapPlayground(p);
                 }));
 
         this.playgroundCache$.subscribe(p => {
@@ -56,52 +60,4 @@ export class PlaygroundService {
     getPlaygrounds(): Observable<PlaygroundListItem[]> {
         return this.http.get<PlaygroundListItem[]>(`${environment.gameApi}playground`);
     }
-
-    private mapPlayground(p: PlaygroundModel): Playground {
-        if (this.playground) {
-            this.playground.dispose();
-        }
-
-        const app = new Application({ width: 700, height: 600, backgroundColor: 0xffffff });
-        app.stage.width = 700;
-        app.stage.height = 600;
-
-        this._playground = new Playground(app);
-        this.addLayers(p);
-
-        return this._playground;
-    }
-
-    private addLayers(p: PlaygroundModel): void {
-        p.layers.forEach(l => {
-            const layer = new Layer(l.id, l.name, l.order);
-            this._playground.addLayer(layer);
-            this.addCanvasObjectsToLayer(layer, l.canvasObjects);
-        });
-    }
-
-    private addCanvasObjectsToLayer(layer: Layer, canvasObjects: CanvasObject[]): void {
-        canvasObjects.forEach(c => {
-            let pixiObject: BasePixiObject;
-            if (c.type === CanvasObjectType.Rectangle) {
-                pixiObject = this.createRectangle(c as RectangleModel);
-            }
-            layer.addObject(pixiObject);
-        });
-    }
-
-    private createRectangle(r: RectangleModel): BasePixiObject {
-        const rectangle = new Rectangle(r.id, {
-            height: r.height,
-            width: r.width,
-            x: r.x,
-            y: r.y,
-            fillColor: {
-                colorInHex: r.colorInHex
-            }
-        });
-
-        return rectangle;
-    }
-
 }

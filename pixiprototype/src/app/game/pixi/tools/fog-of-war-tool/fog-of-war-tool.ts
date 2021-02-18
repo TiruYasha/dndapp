@@ -6,16 +6,16 @@ import { Tool } from '../tool.model';
 import { ToolType } from '../tool.type';
 
 export class FogOfWarTool extends Tool {
-    private layer: Layer;
+    private layer!: Layer;
     private layerName = 'FogOfWar';
-    private fog: Graphics;
-    private maskTexture: RenderTexture;
+    private fog!: Graphics;
+    private maskTexture!: RenderTexture;
 
-    private dragging: boolean;
+    private dragging = false;
     private initialX = 0;
     private initialY = 0;
-    private selection: Graphics;
-    private rectangleReveal = new Graphics();
+    private selection: Graphics | null = null;
+    private rectangleReveal: Graphics | null = new Graphics();
 
     private rectangleRevealEnabled = false;
 
@@ -91,6 +91,9 @@ export class FogOfWarTool extends Tool {
         if (!this.rectangleRevealEnabled) { return; }
 
         this.rectangleReveal = null;
+
+        if (!this.selection) { return; }
+
         this.playground.toolsLayer.container.removeChild(this.selection);
         this.selection = null;
         this.playground.backgroundLayer.container.off('pointerdown', this.pointerDown)
@@ -105,14 +108,19 @@ export class FogOfWarTool extends Tool {
         this.initialX = event.data.global.x;
         this.initialY = event.data.global.y;
         this.dragging = true;
-        this.selection.visible = true;
+
+        if (this.selection) {
+            this.selection.visible = true;
+        }
     }
 
     dragEnd = () => {
+        if (!this.rectangleReveal || !this.selection) { return; }
+
         this.rectangleReveal.position.set(this.selection.x, this.selection.y);
         this.rectangleReveal.width = this.selection.width;
         this.rectangleReveal.height = this.selection.height;
-        this.playground.app.renderer.render(this.rectangleReveal, this.maskTexture, false, null, false);
+        this.playground.app.renderer.render(this.rectangleReveal, this.maskTexture, false, undefined, false);
 
         this.selection.visible = false;
         this.dragging = false;
@@ -121,7 +129,7 @@ export class FogOfWarTool extends Tool {
     }
 
     pointerMove = (event: InteractionEvent) => {
-        if (this.dragging) {
+        if (this.dragging && this.selection) {
             const differenceX = this.initialX - event.data.global.x;
             const differenceY = this.initialY - event.data.global.y;
 

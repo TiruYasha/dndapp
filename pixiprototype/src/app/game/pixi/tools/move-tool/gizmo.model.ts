@@ -18,10 +18,10 @@ export abstract class Gizmo {
 
     constructor(protected moveTool: MoveTool, private moveCallback: () => void) {
         this.gizmo = createGizmo();
-        this.gizmo.on('pointerdown', (event) => this.onDragGizmoStart(event))
+        this.gizmo.on('pointerdown', (event: InteractionEvent) => this.onDragGizmoStart(event))
             .on('pointerup', () => this.onDragGizmoEnd())
             .on('pointerupoutside', () => this.onDragGizmoEnd())
-            .on('pointermove', (event) => this.onDragGizmoMove(event));
+            .on('pointermove', (event: InteractionEvent) => this.onDragGizmoMove(event));
     }
 
     protected abstract onGizmoMove(event: InteractionEvent): void;
@@ -202,7 +202,6 @@ export class BottomRightGizmo extends Gizmo {
 
 export class RotateGizmo extends Gizmo {
 
-    private interactionEvent: InteractionEvent;
     resetPosition(): void {
         this.gizmo.x = 0;
 
@@ -215,8 +214,6 @@ export class RotateGizmo extends Gizmo {
     }
 
     onGizmoMove(event: InteractionEvent): void {
-        this.interactionEvent = event;
-
         this.moveTool.mainContainer.angle = this.calculateAngle(event);
         this.child.angle = this.calculateAngle(event);
     }

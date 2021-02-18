@@ -9,7 +9,7 @@ import { PlaygroundListItem } from '../_models/playground-list-item.model';
 export class PlaygroundPickerComponent {
 
   @Input()
-  playgrounds: PlaygroundListItem[];
+  playgrounds?: PlaygroundListItem[] | null;
 
   @Output()
   selectPlayground = new EventEmitter<string>();

@@ -15,25 +15,14 @@ export class CanvasObjectMapper {
 
     addCanvasObjectsToLayer(layer: Layer, objects: CanvasObject[]): void {
         objects.forEach(object => {
-            let pixiObject: BasePixiObject;
+            let pixiObject: BasePixiObject | undefined;
             if (object.type === CanvasObjectType.Rectangle) {
                 pixiObject = this.pixiObjectMapper.mapRectangle(object as RectangleModel);
             }
-            layer.addObject(pixiObject);
+
+            if (pixiObject) {
+                layer.addObject(pixiObject);
+            }
         });
     }
-
-    // private createRectangle(r: RectangleModel): BasePixiObject {
-    //     const rectangle = new Rectangle(r.id, {
-    //         height: r.height,
-    //         width: r.width,
-    //         x: r.x,
-    //         y: r.y,
-    //         fillColor: {
-    //             colorInHex: r.colorInHex
-    //         }
-    //     });
-
-    //     return rectangle;
-    // }
 }

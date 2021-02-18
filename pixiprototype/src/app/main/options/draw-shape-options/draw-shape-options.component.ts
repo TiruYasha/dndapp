@@ -9,7 +9,7 @@ import { DrawShapeTool } from 'src/app/game/pixi/tools/draw-shape-tool/draw-shap
 export class DrawShapeOptionsComponent implements OnInit {
 
   @Input()
-  drawShapeTool: DrawShapeTool;
+  drawShapeTool!: DrawShapeTool;
 
   constructor() { }
 

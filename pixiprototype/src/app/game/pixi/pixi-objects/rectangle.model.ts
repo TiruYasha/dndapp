@@ -28,8 +28,8 @@ export class Rectangle extends ShapePixiObject {
 }
 
 export class RectangleOptions extends BasePixiObjectOptions {
-    height: number;
-    width: number;
+    height = 0;
+    width = 0;
     lineStyle?: LineStyle;
     fillColor?: FillColor;
 }
@@ -43,6 +43,6 @@ export class LineStyle {
 }
 
 export class FillColor {
-    colorInHex: number;
+    colorInHex = 0x00000;
     alpha?: number;
 }

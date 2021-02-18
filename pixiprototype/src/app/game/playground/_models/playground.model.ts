@@ -1,9 +1,9 @@
 import { LayerModel } from './layer.model';
 
 export class PlaygroundModel {
-    name: string;
+    name = '';
     layers: LayerModel[];
-    isPlayerView: boolean;
+    isPlayerView = false;
     constructor() {
         this.layers = [];
     }

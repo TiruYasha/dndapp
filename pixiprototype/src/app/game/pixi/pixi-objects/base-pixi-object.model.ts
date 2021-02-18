@@ -9,13 +9,13 @@ export abstract class BasePixiObject {
         this.displayObject.y = options.y;
     }
 
-    move(newX, newY): void {
+    move(newX: number, newY: number): void {
         this.displayObject.x = newX;
         this.displayObject.y = newY;
     }
 }
 
 export class BaseOptions {
-    x: number;
-    y: number;
+    x = 0;
+    y = 0;
 }

@@ -1,7 +1,10 @@
-import { BasePixiObject } from '../../pixi/pixi-objects/base-pixi-object.model';
+import { Injectable } from '@angular/core';
 import { Rectangle } from '../../pixi/pixi-objects/rectangle.model';
 import { RectangleModel } from '../_models/canvas-objects/rectangle.model';
 
+@Injectable({
+  providedIn: 'root'
+})
 export class PixiObjectMapper {
   mapRectangle(object: RectangleModel): Rectangle {
     const rectangle = new Rectangle(object.id, {

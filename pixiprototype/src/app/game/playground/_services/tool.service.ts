@@ -9,7 +9,7 @@ import { PlaygroundService } from './playground.service';
     providedIn: 'root'
 })
 export class ToolService {
-    private selectedTool: Tool;
+    private selectedTool?: Tool;
     private selectedToolSubject: ReplaySubject<Tool>;
 
     constructor(private playgroundService: PlaygroundService, private toolFactory: ToolFactory) {

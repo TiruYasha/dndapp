@@ -1,9 +1,9 @@
 import { CanvasObject } from './canvas-objects/canvas-object.model';
 
 export class LayerModel {
-    id: string;
-    name: string;
-    order: number;
+    id = '';
+    name = '';
+    order = 0;
     canvasObjects: CanvasObject[];
 
     constructor() {

@@ -29,7 +29,7 @@ describe('Generic Hub', () => {
     it('on should listen to event', () => {
         // arrange
         const methodName = 'exampleMethod';
-        const callback = (_) => {
+        const callback = (_: any) => {
             expect(true).toBeTruthy();
         };
         when(mockedHubConnection.on(methodName, callback)).thenCall(callback);

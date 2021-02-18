@@ -8,9 +8,9 @@ import { DrawShapeToolOptions, DrawShapeType } from './draw-shape-options.model'
 
 export class DrawShapeTool extends Tool {
     private options: DrawShapeToolOptions;
-    private shape: ShapePixiObject;
+    private shape!: ShapePixiObject;
 
-    private dragging: boolean;
+    private dragging = false;
     private initialX = 0;
     private initialY = 0;
 
