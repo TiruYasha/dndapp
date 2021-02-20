@@ -9,13 +9,11 @@ namespace GamePart.Api.Hubs
     {
         public async Task MoveObject(HubCommand<MoveObject> command)
         {
-            var playerDetails = _jwtReader.GetPlayerDetails();
-
             ObjectMoved moved = new ObjectMoved(command.Data.ObjectId, command.Data.LayerId, command.Data.NewX, command.Data.NewY);
 
             var @event = new HubEvent<ObjectMoved>(moved);
 
-            await Clients.Group(playerDetails.GameId.ToString()).SendAsync("ObjectMoved", @event);
+            await Clients.Group(command.Data.PlaygroundId.ToString()).SendAsync("ObjectMoved", @event);
         }
     }
 }

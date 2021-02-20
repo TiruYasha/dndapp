@@ -9,14 +9,12 @@ namespace GamePart.Api.Hubs
 
         public async Task ConnectToPlayground(HubCommand<ConnectToPlayground> command)
         {
-            //if (command.Data.oldPlaygroundId.HasValue)
-            //{
-            //    await Groups.RemoveFromGroupAsync(Context.ConnectionId, command.Data.oldPlaygroundId.Value.ToString());
-            //}
+            if (command.Data.OldPlaygroundId.HasValue)
+            {
+                await Groups.RemoveFromGroupAsync(Context.ConnectionId, command.Data.OldPlaygroundId.Value.ToString());
+            }
 
-            //await Groups.AddToGroupAsync(Context.ConnectionId, command.Data.playgroundId.ToString());
-
-            //await base.OnConnectedAsync();
+            await Groups.AddToGroupAsync(Context.ConnectionId, command.Data.PlaygroundId.ToString());
         }
     }
 }

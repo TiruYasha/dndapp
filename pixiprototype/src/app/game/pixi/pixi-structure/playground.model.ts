@@ -20,7 +20,7 @@ export class Playground {
     activeLayer$ = this.activeLayerSubject.asObservable();
     activeTool$ = this.activeToolSubject.asObservable();
 
-    constructor(public app: Application) {
+    constructor(public app: Application, public id: string) {
         this.createBackground();
         this.addLayerQuick('default', 0);
         this.createToolsLayer();

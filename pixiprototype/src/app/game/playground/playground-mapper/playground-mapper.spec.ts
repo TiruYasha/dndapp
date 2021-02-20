@@ -28,6 +28,7 @@ describe('PlaygroundMapperService', () => {
   it('should return a playground on mapPlayground', () => {
     const layer = instance(mock(LayerModel));
     const playgroundModel: PlaygroundModel = {
+      id: '',
       isPlayerView: true,
       layers: [layer],
       name: 'test'
@@ -35,6 +36,7 @@ describe('PlaygroundMapperService', () => {
 
     const result = sut.MapPlayground(playgroundModel);
 
+    expect(result.id).toEqual(playgroundModel.id);
     expect(result.width).toEqual(700);
     expect(result.height).toEqual(600);
     expect(result.app.stage.width).toEqual(700);

@@ -16,7 +16,7 @@ export class PlaygroundMapper {
     app.stage.width = 700;
     app.stage.height = 600;
 
-    const playground = new Playground(app);
+    const playground = new Playground(app, p.id);
     this.layerMapper.addLayers(playground, p.layers);
 
     return playground;

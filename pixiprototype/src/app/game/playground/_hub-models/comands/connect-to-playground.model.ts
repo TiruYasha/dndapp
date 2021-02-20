@@ -1,4 +1,4 @@
 export interface ConnectToPlayground {
-    oldPlaygroundId: string;
+    oldPlaygroundId: string | undefined;
     playgroundId: string;
 }
