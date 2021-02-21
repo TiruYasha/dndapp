@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Hub } from 'src/app/_helpers/hub';
-import { ObjectMoved } from 'src/app/game/playground/_hub-models/events/object-moved.model';
+import { Hub } from 'src/app/game/_hubs/hub';
+import { ObjectMoved } from 'src/app/game/_hubs/models/events/object-moved.model';
 import { PlaygroundService } from 'src/app/game/playground/_services/playground.service';
 import { HubEvents } from '../hub-events';
 

@@ -1,5 +1,5 @@
-import { CanvasObjectType } from '../_models/canvas-objects/canvas-object.type';
-import { RectangleModel } from '../_models/canvas-objects/rectangle.model';
+import { CanvasObjectType } from '../../_hubs/models/shared/canvas-objects/canvas-object.type';
+import { RectangleModel } from '../../_hubs/models/shared/canvas-objects/rectangle.model';
 import { PixiObjectMapper } from './pixi-object-mapper';
 
 describe('PixiObjectMapper', () => {

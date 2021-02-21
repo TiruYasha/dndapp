@@ -1,5 +1,5 @@
-﻿using GamePart.Api.Models.HubCommands;
-using GamePart.Api.Models.HubEvents;
+﻿using GamePart.Api.Events;
+using GamePart.Api.Models.HubCommands;
 using Microsoft.AspNetCore.SignalR;
 using System.Threading.Tasks;
 

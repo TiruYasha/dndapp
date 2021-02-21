@@ -3,7 +3,7 @@ import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { PlaygroundService } from 'src/app/game/playground/_services/playground.service';
 import { ObjectHub } from '../_hubs/object/object.hub';
-import { PlaygroundListItem } from './_models/playground-list-item.model';
+import { PlaygroundListItem } from '../_hubs/models/shared/playground-list-item.model';
 
 @Component({
   selector: 'trpg-playground',
@@ -20,18 +20,14 @@ export class PlaygroundComponent implements OnInit {
 
   playGroundLoaded = false;
   constructor(
-    private playgroundService: PlaygroundService,
-    private objectHub: ObjectHub) {
+    private playgroundService: PlaygroundService) {
     this.playgrounds$ = this.playgroundService.getPlaygrounds();
     this.playgroundService.playground$.pipe(takeUntil(this.destroySubject))
       .subscribe(a => {
         const div = this.playgroundCanvas.nativeElement as HTMLDivElement;
         if (this.playGroundLoaded === true) {
           div.innerHTML = '';
-        } else {
-          this.objectHub.startListening();
         }
-
         div.appendChild(a.app.view);
         this.playGroundLoaded = true;
         a.setActiveLayerByName('Layer 2');
@@ -39,10 +35,10 @@ export class PlaygroundComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    console.log('loading');
   }
 
   changePlayground(playgroundId: string): void {
-    this.playgroundService.changePlayground(playgroundId);
+    this.playgroundService.connectToPlayground(playgroundId);
   }
 }

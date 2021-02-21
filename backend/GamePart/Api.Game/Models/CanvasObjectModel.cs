@@ -13,7 +13,7 @@ namespace Api.Game.Models
         public CanvasObjectType Type { get; set; }
         public double X { get; set; }
         public double Y { get; set; }
-
+  
         public CanvasObjectModel(CanvasObjectType type)
         {
             Type = type;

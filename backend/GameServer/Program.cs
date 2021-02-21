@@ -42,9 +42,10 @@ namespace GameServer
                 .ConfigureLogging(logging =>
                 {
                     logging.ClearProviders();
-                    logging.SetMinimumLevel(LogLevel.Trace);
-                    logging.AddFilter("Microsoft.AspNetCore.SignalR", LogLevel.Debug);
-                    logging.AddFilter("Microsoft.AspNetCore.Http.Connections", LogLevel.Debug);
+                    //logging.SetMinimumLevel(LogLevel.Trace);
+                    //logging.AddFilter("Microsoft.AspNetCore.SignalR", LogLevel.Debug);
+                    //logging.AddFilter("Microsoft.AspNetCore.Http.Connections", LogLevel.Debug);
+                    logging.AddConsole();
                 })
                 .UseNLog();  // NLog: Setup NLog for Dependency injection
     }

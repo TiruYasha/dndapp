@@ -96,7 +96,8 @@ namespace GameServer
                 });
             });
 
-            services.AddSignalR();
+            services.AddSignalR()
+                .AddNewtonsoftJsonProtocol();
             services.AddControllers()
                 .AddApplicationPart(gameAssembly)
                 .AddNewtonsoftJson();

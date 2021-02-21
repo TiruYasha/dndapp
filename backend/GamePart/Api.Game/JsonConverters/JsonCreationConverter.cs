@@ -21,7 +21,6 @@ namespace GamePart.Api.JsonConverters
             return typeof(T).IsAssignableFrom(objectType);
         }
 
-
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
             if (reader == null) throw new ArgumentNullException("reader");

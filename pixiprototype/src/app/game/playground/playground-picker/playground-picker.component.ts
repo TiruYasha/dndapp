@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { PlaygroundListItem } from '../_models/playground-list-item.model';
+import { PlaygroundListItem } from '../../_hubs/models/shared/playground-list-item.model';
 
 @Component({
   selector: 'trpg-playground-picker',

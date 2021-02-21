@@ -1,4 +1,5 @@
-﻿using GamePart.Api.Utilities;
+﻿using GamePart.Api.Readers;
+using GamePart.Api.Utilities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
@@ -10,10 +11,13 @@ namespace GamePart.Api.Hubs
     public partial class GameHub : Hub
     {
         private readonly IJwtReader _jwtReader;
+        private readonly IPlaygroundReader _playgroundReader;
 
-        public GameHub(IJwtReader jwtReader)
+
+        public GameHub(IJwtReader jwtReader, IPlaygroundReader playgroundReader)
         {
             _jwtReader = jwtReader;
+            _playgroundReader = playgroundReader;
         }
 
         public async override Task OnConnectedAsync()
@@ -21,7 +25,7 @@ namespace GamePart.Api.Hubs
             var playerDetails = _jwtReader.GetPlayerDetails();
 
             await Groups.AddToGroupAsync(Context.ConnectionId, playerDetails.GameId.ToString());
-            
+
             await base.OnConnectedAsync();
         }
     }

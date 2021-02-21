@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { BasePixiObject } from '../../pixi/pixi-objects/base-pixi-object.model';
 import { Layer } from '../../pixi/pixi-structure/layer.model';
-import { CanvasObject } from '../_models/canvas-objects/canvas-object.model';
-import { CanvasObjectType } from '../_models/canvas-objects/canvas-object.type';
-import { RectangleModel } from '../_models/canvas-objects/rectangle.model';
+import { CanvasObject } from '../../_hubs/models/shared/canvas-objects/canvas-object.model';
+import { CanvasObjectType } from '../../_hubs/models/shared/canvas-objects/canvas-object.type';
+import { RectangleModel } from '../../_hubs/models/shared/canvas-objects/rectangle.model';
 import { PixiObjectMapper } from './pixi-object-mapper';
 
 @Injectable({

@@ -1,8 +1,8 @@
 import { anything, instance, mock, verify, when } from 'ts-mockito';
 import { Rectangle } from '../../pixi/pixi-objects/rectangle.model';
 import { Layer } from '../../pixi/pixi-structure/layer.model';
-import { CanvasObject } from '../_models/canvas-objects/canvas-object.model';
-import { RectangleModel } from '../_models/canvas-objects/rectangle.model';
+import { CanvasObject } from '../../_hubs/models/shared/canvas-objects/canvas-object.model';
+import { RectangleModel } from '../../_hubs/models/shared/canvas-objects/rectangle.model';
 import { CanvasObjectMapper } from './canvas-object-mapper';
 import { PixiObjectMapper } from './pixi-object-mapper';
 

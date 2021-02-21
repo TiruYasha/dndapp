@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Rectangle } from '../../pixi/pixi-objects/rectangle.model';
-import { RectangleModel } from '../_models/canvas-objects/rectangle.model';
+import { RectangleModel } from '../../_hubs/models/shared/canvas-objects/rectangle.model';
 
 @Injectable({
   providedIn: 'root'

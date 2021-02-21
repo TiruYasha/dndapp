@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { instance, mock, notNull, verify, when } from 'ts-mockito';
-import { LayerModel } from '../_models/layer.model';
-import { PlaygroundModel } from '../_models/playground.model';
+import { LayerModel } from '../../_hubs/models/shared/layer.model';
+import { PlaygroundModel } from '../../_hubs/models/shared/playground.model';
 import { LayerMapper } from './layer-mapper';
 import { PlaygroundMapper } from './playground-mapper';
 

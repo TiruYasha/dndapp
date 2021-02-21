@@ -4,7 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GamePart.Api.Models.HubEvents
+namespace GamePart.Api.Events
 {
-    public record HubEvent<T>(T Data);
+    public record ObjectMoved(Guid ObjectId, Guid LayerId, int NewX, int NewY);
+
 }

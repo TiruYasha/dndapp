@@ -1,7 +1,7 @@
 import { anyOfClass, anything, deepEqual, instance, mock, verify, when } from 'ts-mockito';
 import { Layer } from '../../pixi/pixi-structure/layer.model';
 import { Playground } from '../../pixi/pixi-structure/playground.model';
-import { LayerModel } from '../_models/layer.model';
+import { LayerModel } from '../../_hubs/models/shared/layer.model';
 import { LayerMapper } from './layer-mapper';
 import { CanvasObjectMapper } from './canvas-object-mapper';
 

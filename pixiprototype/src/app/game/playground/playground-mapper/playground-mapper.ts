@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Application } from 'pixi.js';
 import { Playground } from '../../pixi/pixi-structure/playground.model';
-import { PlaygroundModel } from '../_models/playground.model';
+import { PlaygroundModel } from '../../_hubs/models/shared/playground.model';
 import { LayerMapper } from './layer-mapper';
 
 @Injectable({
